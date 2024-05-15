@@ -1,0 +1,12 @@
+.sidebar-container {
+  border: 5px solid red;
+  flex: 0.25;
+
+  .sidebar {
+    display: none;
+
+    &.active {
+      display: inline-block;
+    }
+  }
+}

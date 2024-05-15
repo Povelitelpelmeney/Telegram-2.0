@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.9.11",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -10,9 +11,13 @@
     "@types/node": "^16.18.96",
     "@types/react": "^18.2.76",
     "@types/react-dom": "^18.2.25",
+    "graphql": "^16.8.1",
+    "graphql-ws": "^5.16.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.2.0",
     "react-scripts": "5.0.1",
+    "sass": "^1.75.0",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -39,5 +44,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3"
   }
 }
