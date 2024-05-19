@@ -7,7 +7,7 @@ module.exports = {
   client: {
     service: {
       name: process.env.GRAPHQL_SERVICE_NAME,
-      url: process.env.GRAPHQL_ENDPOINT,
+      url: process.env.HTTP_GRAPHQL_ENDPOINT,
     },
     includes: ["src/graphql/**/*.graphql"],
   },

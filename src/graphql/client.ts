@@ -1,14 +1,24 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
+import { ApolloClient, InMemoryCache, HttpLink, split } from "@apollo/client";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { setContext } from "@apollo/client/link/context";
+import { createClient } from "graphql-ws";
 
 interface Headers {
   authorization?: string;
   [key: string]: string | undefined;
 }
 
-const httpLink = createHttpLink({
-  uri: import.meta.env.VITE_GRAPHQL_ENDPOINT,
+const httpLink = new HttpLink({
+  uri: import.meta.env.VITE_HTTP_GRAPHQL_ENDPOINT,
 });
+
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: import.meta.env.VITE_WS_GRAPHQL_ENDPOINT,
+    lazy: true,
+  }),
+);
 
 const authLink = setContext((_, { headers }: { headers?: Headers }) => {
   const token = localStorage.getItem("token");
@@ -20,8 +30,20 @@ const authLink = setContext((_, { headers }: { headers?: Headers }) => {
   return { headers: authHeaders };
 });
 
+const link = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
+    );
+  },
+  authLink.concat(wsLink),
+  authLink.concat(httpLink),
+);
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: link,
   cache: new InMemoryCache(),
 });
 
