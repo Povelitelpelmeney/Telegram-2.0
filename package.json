@@ -14,8 +14,12 @@
     "@apollo/client": "^3.10.4",
     "dotenv": "^16.4.5",
     "graphql": "^16.8.1",
+    "graphql-ws": "^5.16.0",
+    "minidenticons": "^4.2.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.2.1",
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^5.0.2",

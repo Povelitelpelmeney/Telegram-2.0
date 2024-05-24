@@ -1,0 +1,31 @@
+subscription NewMessage($chatId: ID!) {
+  newMessage(chatId: $chatId) {
+    ...MessageField
+  }
+}
+
+fragment MessageField on Message {
+  createdAt
+  createdBy {
+    ...UserField
+  }
+  id
+  meta {
+    ...MetaField
+  }
+  text
+}
+
+fragment UserField on User {
+  image
+  login
+  meta {
+    ...MetaField
+  }
+  name
+}
+
+fragment MetaField on Meta {
+  key
+  val
+}
