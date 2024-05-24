@@ -5,7 +5,7 @@ import "./Header.scss";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
-  const [theme, toggleTheme] = useDarkTheme();
+  const { theme, toggleTheme } = useDarkTheme();
   const toggle = document.getElementById("toggle_input");
 
   console.log(theme);

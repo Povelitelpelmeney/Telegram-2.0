@@ -6,7 +6,7 @@ import client from "./apollo";
 import router from "./routes";
 
 const App = () => {
-  const [theme, toggleTheme] = useDarkTheme();
+  const { theme, toggleTheme } = useDarkTheme();
 
   return (
     <div className="fixed flex h-screen w-screen flex-row bg-slate-100 dark:bg-slate-800">

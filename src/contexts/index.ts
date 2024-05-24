@@ -1,7 +1,7 @@
 import { createContext } from "react";
-import { useColorScheme } from "../hooks";
+import { useDarkTheme } from "../hooks";
 
-export type ThemeContextType = ReturnType<typeof useColorScheme> | undefined;
+export type ThemeContextType = ReturnType<typeof useDarkTheme> | undefined;
 export const ThemeContext = createContext<ThemeContextType>(undefined);
 
 export type AuthContextType =

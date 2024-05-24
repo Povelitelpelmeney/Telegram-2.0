@@ -19,7 +19,7 @@ const useDarkTheme = () => {
       : document.body.classList.remove("dark");
   }, [theme]);
 
-  return [theme, toggleTheme] as [string, () => void];
+  return { theme, toggleTheme } as const;
 };
 
 export default useDarkTheme;
