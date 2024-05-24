@@ -1,2 +1,2 @@
-export { default as useColorScheme } from "./useColorScheme";
+export { default as useDarkTheme } from "./useDarkTheme";
 export { default as useMediaQuery } from "./useMediaQuery";

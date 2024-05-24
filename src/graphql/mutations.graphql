@@ -3,3 +3,88 @@ mutation SignUp($login: String!, $password: String!, $name: String!) {
     __typename
   }
 }
+
+mutation CreateChat($type: ChatType!, $name: String!, $members: [String!]!) {
+  createChat(type: $type, members: $members, name: $name) {
+    type
+    name
+    owner {
+      image
+      name
+    }
+  }
+}
+
+mutation InviteUser($chatId: ID!, $login: String!) {
+  inviteUser(login: $login, chatId: $chatId)
+}
+
+mutation KickUser($chatId: ID!, $login: String!) {
+  kickUser(login: $login, chatId: $chatId)
+}
+
+mutation DeleteChat($id: ID!) {
+  deleteChat(id: $id)
+}
+
+mutation SendMessage($chatId: ID!, $text: String!) {
+  sendMessage(chatId: $chatId, text: $text) {
+    id
+    createdAt
+    createdBy {
+      name
+      image
+    }
+    text
+    meta {
+      key
+      val
+    }
+  }
+}
+
+mutation EditMessage($chatId: ID!, $messageId: ID!, $text: String!) {
+  editMessage(chatId: $chatId, messageId: $messageId, text: $text) {
+    id
+    createdAt
+    createdBy {
+      name
+      image
+    }
+    text
+    meta {
+      key
+      val
+    }
+  }
+}
+
+mutation DeleteMessage($chatId: ID!, $messageId: ID!) {
+  deleteMessage(chatId: $chatId, messageId: $messageId)
+}
+
+mutation UpsertMessageMeta(
+  $chatId: ID!
+  $messageId: ID!
+  $key: String!
+  $val: String!
+) {
+  upsertMessageMeta(
+    chatId: $chatId
+    messageId: $messageId
+    key: $key
+    val: $val
+  ) {
+    id
+    createdAt
+    createdBy {
+      name
+      image
+    }
+    text
+    meta {
+      key
+      val
+    }
+  }
+}
