@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useMediaQuery } from ".";
+import useMediaQuery from "./useMediaQuery";
 
 const useDarkTheme = () => {
   const prefersDarkTheme = useMediaQuery("(prefers-color-scheme: dark)");
