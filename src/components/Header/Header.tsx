@@ -6,46 +6,50 @@ import useColorScheme from "../../hooks/useColorScheme";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const [check, setCheck] = useState(false);
   const { colorScheme, toggleColorScheme } = useColorScheme();
-  const toggle = document.getElementById("toggle_input");
-  console.log(colorScheme);
   const togglePopup = () => {
     setOpen(!open);
+    if (colorScheme==="light"){
+      handleCheck()
+    }
   };
+  const handleCheck = () =>{
+    setCheck(!check)
+  }
   const changeScheme = () => {
     toggleColorScheme();
-    colorScheme === "light" ? toggle?.setAttribute("checked", "true") : "";
-    colorScheme === "dark" ? toggle?.removeAttribute("checked") : "";
+    handleCheck();
   };
   return (
     <div className="header dark:bg-gray-800">
       {open ? (
         <div className="popup_button rotate">
           <button onClick={togglePopup}>
-            <i className="bi bi-list dark:text-slate-100"></i>
+            <i className="bi bi-list text-color"></i>
           </button>
         </div>
       ) : (
         <div className="popup_button rotate_back">
           <button onClick={togglePopup}>
-            <i className="bi bi-list"></i>
+            <i className="bi bi-list text-color"></i>
           </button>
         </div>
       )}
       {open && (
-        <div className="menu_popup rounded-xl">
+        <div className="menu_popup border-radius">
           <ul className="dropdown_content dark:bg-gray-800">
             <li>
               <div className="settings">
-                <div className="li_item dark:hover:bg-violet-500">
-                  <p className="dark:text-slate-100">Settings</p>
+                <div className="li_item hover-text">
+                  <p className="text-color">Settings</p>
                 </div>
               </div>
             </li>
             <li>
               <div className="theme_switch" onClick={changeScheme}>
-                <div className="li_item dark:hover:bg-violet-500">
-                  <p className="dark:text-slate-100">Dark mode</p>
+                <div className="li_item hover-text">
+                  <p className="text-color">Dark mode</p>
                 </div>
                 <div className="toggle_switch">
                   <label>
@@ -53,6 +57,7 @@ const Header = () => {
                       id="toggle_input"
                       type="checkbox"
                       onChange={changeScheme}
+                      checked={check}
                       disabled
                     />
                     <span className="slider"></span>
@@ -61,7 +66,18 @@ const Header = () => {
               </div>
             </li>
             <li>
-              <div></div>
+            <div className="somth">
+                <div className="li_item hover-text">
+                  <p className="text-color">smth</p>
+                </div>
+              </div>
+            </li>
+            <li>
+            <div className="somth">
+                <div className="li_item hover-text">
+                  <p className="text-color">smth</p>
+                </div>
+              </div>
             </li>
           </ul>
         </div>

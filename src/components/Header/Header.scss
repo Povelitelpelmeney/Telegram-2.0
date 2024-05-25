@@ -4,7 +4,9 @@
   --link: rgb(27, 129, 112);
   --link-hover: rgb(24, 94, 82);
 }
-
+.theme_switch{
+  height: 24px;
+}
 .header {
   background-color: rgb(240, 248, 255);
   width: 25%;
@@ -32,16 +34,15 @@
     display: inline-block;
     width: 100%;
     height: 100%;
-    :hover {
-      background-color: rgb(213, 226, 237);
-    }
+
   }
   .menu_popup {
     position: absolute;
     top: 65px;
     z-index: 2;
     background-color: aliceblue;
-    width: 15%;
+    width: 25%;
+    
 
     // .dropdown_content {
     //   transition-duration: 1s, 0.5s;
