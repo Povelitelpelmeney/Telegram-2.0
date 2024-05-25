@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { ApolloProvider } from "@apollo/client";
 import client from "./graphql/client";
 import App from "./App.tsx";
-import Header from "./components/Header/Header.tsx";
+import Header from "./components/ChatsSidebarHeader/ChatsSidebarHeader.tsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
