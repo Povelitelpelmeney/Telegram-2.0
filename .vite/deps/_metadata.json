@@ -1,0 +1,76 @@
+{
+  "hash": "ce49cce0",
+  "configHash": "e0442654",
+  "lockfileHash": "1010cac7",
+  "browserHash": "0b6c2db9",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "8d24a146",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "1e3f8b7f",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "5df2a6e9",
+      "needsInterop": true
+    },
+    "@apollo/client": {
+      "src": "../../node_modules/@apollo/client/index.js",
+      "file": "@apollo_client.js",
+      "fileHash": "8b9e0393",
+      "needsInterop": false
+    },
+    "@apollo/client/utilities": {
+      "src": "../../node_modules/@apollo/client/utilities/index.js",
+      "file": "@apollo_client_utilities.js",
+      "fileHash": "d66abb37",
+      "needsInterop": false
+    },
+    "@apollo/client/link/subscriptions": {
+      "src": "../../node_modules/@apollo/client/link/subscriptions/index.js",
+      "file": "@apollo_client_link_subscriptions.js",
+      "fileHash": "01c2e54e",
+      "needsInterop": false
+    },
+    "@apollo/client/link/context": {
+      "src": "../../node_modules/@apollo/client/link/context/index.js",
+      "file": "@apollo_client_link_context.js",
+      "fileHash": "572867f0",
+      "needsInterop": false
+    },
+    "graphql-ws": {
+      "src": "../../node_modules/graphql-ws/lib/index.mjs",
+      "file": "graphql-ws.js",
+      "fileHash": "07199413",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-QY3QVPNU": {
+      "file": "chunk-QY3QVPNU.js"
+    },
+    "chunk-MFUTYN33": {
+      "file": "chunk-MFUTYN33.js"
+    },
+    "chunk-3KOQ4T2F": {
+      "file": "chunk-3KOQ4T2F.js"
+    },
+    "chunk-5UTDYZ6L": {
+      "file": "chunk-5UTDYZ6L.js"
+    },
+    "chunk-CFQ2ASUW": {
+      "file": "chunk-CFQ2ASUW.js"
+    },
+    "chunk-LQ2VYIYD": {
+      "file": "chunk-LQ2VYIYD.js"
+    }
+  }
+}

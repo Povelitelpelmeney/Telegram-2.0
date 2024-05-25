@@ -1,0 +1,21 @@
+subscription NewMessage($chatId: ID!) {
+  newMessage(chatId: $chatId) {
+    id
+    createdAt
+    createdBy {
+      name
+      image
+    }
+    text
+    meta {
+      key
+      val
+    }
+  }
+}
+
+subscription NewEvent {
+  newEvent {
+    __typename
+  }
+}
