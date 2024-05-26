@@ -3,7 +3,11 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: "selector",
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        aliceblue: "#f0f8ff",
+      },
+    },
   },
   plugins: [],
 };
