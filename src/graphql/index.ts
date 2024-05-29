@@ -79,6 +79,8 @@ export type Event = MessageEvent;
 
 export type Message = {
   __typename?: 'Message';
+  /** Уникальный идентификатор чата. */
+  chatId: Scalars['ID']['output'];
   /** Время доставки сообщения в чат. */
   createdAt: Scalars['Time']['output'];
   /** Автор сообщения. */
@@ -439,7 +441,7 @@ export type CreateChatMutationVariables = Exact<{
 }>;
 
 
-export type CreateChatMutation = { __typename?: 'Mutation', createChat: { __typename?: 'Chat', type: ChatType, name: string, owner: { __typename?: 'User', image?: any | null, name: string } } };
+export type CreateChatMutation = { __typename?: 'Mutation', createChat: { __typename?: 'Chat', type: ChatType, name: string, owner: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } } };
 
 export type InviteUserMutationVariables = Exact<{
   chatId: Scalars['ID']['input'];
@@ -470,7 +472,7 @@ export type SendMessageMutationVariables = Exact<{
 }>;
 
 
-export type SendMessageMutation = { __typename?: 'Mutation', sendMessage?: { __typename?: 'Message', id: string, createdAt: any, text: string, createdBy: { __typename?: 'User', name: string, image?: any | null }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } | null };
+export type SendMessageMutation = { __typename?: 'Mutation', sendMessage?: { __typename?: 'Message', id: string, chatId: string, createdAt: any, text: string, createdBy: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } | null };
 
 export type EditMessageMutationVariables = Exact<{
   chatId: Scalars['ID']['input'];
@@ -479,7 +481,7 @@ export type EditMessageMutationVariables = Exact<{
 }>;
 
 
-export type EditMessageMutation = { __typename?: 'Mutation', editMessage?: { __typename?: 'Message', id: string, createdAt: any, text: string, createdBy: { __typename?: 'User', name: string, image?: any | null }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } | null };
+export type EditMessageMutation = { __typename?: 'Mutation', editMessage?: { __typename?: 'Message', id: string, chatId: string, createdAt: any, text: string, createdBy: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } | null };
 
 export type DeleteMessageMutationVariables = Exact<{
   chatId: Scalars['ID']['input'];
@@ -497,7 +499,13 @@ export type UpsertMessageMetaMutationVariables = Exact<{
 }>;
 
 
-export type UpsertMessageMetaMutation = { __typename?: 'Mutation', upsertMessageMeta?: { __typename?: 'Message', id: string, createdAt: any, text: string, createdBy: { __typename?: 'User', name: string, image?: any | null }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } | null };
+export type UpsertMessageMetaMutation = { __typename?: 'Mutation', upsertMessageMeta?: { __typename?: 'Message', id: string, chatId: string, createdAt: any, text: string, createdBy: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } | null };
+
+export type MessageFieldFragment = { __typename?: 'Message', id: string, chatId: string, createdAt: any, text: string, createdBy: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> };
+
+export type UserFieldFragment = { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> };
+
+export type MetaFieldFragment = { __typename?: 'Meta', key: string, val: string };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -518,20 +526,46 @@ export type GetAvailableChatsQueryVariables = Exact<{
 }>;
 
 
-export type GetAvailableChatsQuery = { __typename?: 'Query', chats: Array<{ __typename?: 'Chat', id: string, type: ChatType, image?: any | null, name: string, messages: Array<{ __typename?: 'Message', createdAt: any, id: string, text: string, createdBy: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }>, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }> };
+export type GetAvailableChatsQuery = { __typename?: 'Query', chats: Array<{ __typename?: 'Chat', id: string, type: ChatType, image?: any | null, name: string, messages: Array<{ __typename?: 'Message', id: string, chatId: string, createdAt: any, text: string, createdBy: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }>, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }> };
 
-export type MessageFieldFragment = { __typename?: 'Message', createdAt: any, id: string, text: string, createdBy: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> };
+export type GetChatInfoQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
 
-export type UserFieldFragment = { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> };
 
-export type MetaFieldFragment = { __typename?: 'Meta', key: string, val: string };
+export type GetChatInfoQuery = { __typename?: 'Query', chat?: { __typename?: 'Chat', id: string, type: ChatType, image?: any | null, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }>, owner: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } } | null };
+
+export type GetChatMessagesQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetChatMessagesQuery = { __typename?: 'Query', chat?: { __typename?: 'Chat', id: string, messages: Array<{ __typename?: 'Message', id: string, chatId: string, createdAt: any, text: string, createdBy: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }> } | null };
+
+export type GetChatMembersQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetChatMembersQuery = { __typename?: 'Query', chat?: { __typename?: 'Chat', id: string, members: Array<{ __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }> } | null };
 
 export type NewMessageSubscriptionVariables = Exact<{
   chatId: Scalars['ID']['input'];
 }>;
 
 
-export type NewMessageSubscription = { __typename?: 'Subscription', newMessage: { __typename?: 'Message', createdAt: any, id: string, text: string, createdBy: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } };
+export type NewMessageSubscription = { __typename?: 'Subscription', newMessage: { __typename?: 'Message', id: string, chatId: string, createdAt: any, text: string, createdBy: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } };
+
+export type NewMessagesSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewMessagesSubscription = { __typename?: 'Subscription', newEvent: { __typename?: 'MessageEvent', chat: { __typename?: 'Chat', id: string }, message: { __typename?: 'Message', id: string, chatId: string, createdAt: any, text: string, createdBy: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } } };
+
+export type MessageEventFieldFragment = { __typename?: 'MessageEvent', chat: { __typename?: 'Chat', id: string }, message: { __typename?: 'Message', id: string, chatId: string, createdAt: any, text: string, createdBy: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> }, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } };
 
 export const MetaFieldFragmentDoc = gql`
     fragment MetaField on Meta {
@@ -551,11 +585,12 @@ export const UserFieldFragmentDoc = gql`
     ${MetaFieldFragmentDoc}`;
 export const MessageFieldFragmentDoc = gql`
     fragment MessageField on Message {
+  id
+  chatId
   createdAt
   createdBy {
     ...UserField
   }
-  id
   meta {
     ...MetaField
   }
@@ -563,6 +598,16 @@ export const MessageFieldFragmentDoc = gql`
 }
     ${UserFieldFragmentDoc}
 ${MetaFieldFragmentDoc}`;
+export const MessageEventFieldFragmentDoc = gql`
+    fragment MessageEventField on MessageEvent {
+  chat {
+    id
+  }
+  message {
+    ...MessageField
+  }
+}
+    ${MessageFieldFragmentDoc}`;
 export const SignUpDocument = gql`
     mutation SignUp($login: String!, $password: String!, $name: String!) {
   register(login: $login, password: $password, name: $name) {
@@ -604,12 +649,11 @@ export const CreateChatDocument = gql`
     type
     name
     owner {
-      image
-      name
+      ...UserField
     }
   }
 }
-    `;
+    ${UserFieldFragmentDoc}`;
 export type CreateChatMutationFn = Apollo.MutationFunction<CreateChatMutation, CreateChatMutationVariables>;
 
 /**
@@ -736,20 +780,10 @@ export type DeleteChatMutationOptions = Apollo.BaseMutationOptions<DeleteChatMut
 export const SendMessageDocument = gql`
     mutation SendMessage($chatId: ID!, $text: String!) {
   sendMessage(chatId: $chatId, text: $text) {
-    id
-    createdAt
-    createdBy {
-      name
-      image
-    }
-    text
-    meta {
-      key
-      val
-    }
+    ...MessageField
   }
 }
-    `;
+    ${MessageFieldFragmentDoc}`;
 export type SendMessageMutationFn = Apollo.MutationFunction<SendMessageMutation, SendMessageMutationVariables>;
 
 /**
@@ -780,20 +814,10 @@ export type SendMessageMutationOptions = Apollo.BaseMutationOptions<SendMessageM
 export const EditMessageDocument = gql`
     mutation EditMessage($chatId: ID!, $messageId: ID!, $text: String!) {
   editMessage(chatId: $chatId, messageId: $messageId, text: $text) {
-    id
-    createdAt
-    createdBy {
-      name
-      image
-    }
-    text
-    meta {
-      key
-      val
-    }
+    ...MessageField
   }
 }
-    `;
+    ${MessageFieldFragmentDoc}`;
 export type EditMessageMutationFn = Apollo.MutationFunction<EditMessageMutation, EditMessageMutationVariables>;
 
 /**
@@ -857,20 +881,10 @@ export type DeleteMessageMutationOptions = Apollo.BaseMutationOptions<DeleteMess
 export const UpsertMessageMetaDocument = gql`
     mutation UpsertMessageMeta($chatId: ID!, $messageId: ID!, $key: String!, $val: String!) {
   upsertMessageMeta(chatId: $chatId, messageId: $messageId, key: $key, val: $val) {
-    id
-    createdAt
-    createdBy {
-      name
-      image
-    }
-    text
-    meta {
-      key
-      val
-    }
+    ...MessageField
   }
 }
-    `;
+    ${MessageFieldFragmentDoc}`;
 export type UpsertMessageMetaMutationFn = Apollo.MutationFunction<UpsertMessageMetaMutation, UpsertMessageMetaMutationVariables>;
 
 /**
@@ -1029,6 +1043,146 @@ export type GetAvailableChatsQueryHookResult = ReturnType<typeof useGetAvailable
 export type GetAvailableChatsLazyQueryHookResult = ReturnType<typeof useGetAvailableChatsLazyQuery>;
 export type GetAvailableChatsSuspenseQueryHookResult = ReturnType<typeof useGetAvailableChatsSuspenseQuery>;
 export type GetAvailableChatsQueryResult = Apollo.QueryResult<GetAvailableChatsQuery, GetAvailableChatsQueryVariables>;
+export const GetChatInfoDocument = gql`
+    query GetChatInfo($id: ID!) {
+  chat(id: $id) {
+    id
+    type
+    image
+    name
+    meta {
+      ...MetaField
+    }
+    owner {
+      ...UserField
+    }
+  }
+}
+    ${MetaFieldFragmentDoc}
+${UserFieldFragmentDoc}`;
+
+/**
+ * __useGetChatInfoQuery__
+ *
+ * To run a query within a React component, call `useGetChatInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChatInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChatInfoQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetChatInfoQuery(baseOptions: Apollo.QueryHookOptions<GetChatInfoQuery, GetChatInfoQueryVariables> & ({ variables: GetChatInfoQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChatInfoQuery, GetChatInfoQueryVariables>(GetChatInfoDocument, options);
+      }
+export function useGetChatInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChatInfoQuery, GetChatInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChatInfoQuery, GetChatInfoQueryVariables>(GetChatInfoDocument, options);
+        }
+export function useGetChatInfoSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetChatInfoQuery, GetChatInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetChatInfoQuery, GetChatInfoQueryVariables>(GetChatInfoDocument, options);
+        }
+export type GetChatInfoQueryHookResult = ReturnType<typeof useGetChatInfoQuery>;
+export type GetChatInfoLazyQueryHookResult = ReturnType<typeof useGetChatInfoLazyQuery>;
+export type GetChatInfoSuspenseQueryHookResult = ReturnType<typeof useGetChatInfoSuspenseQuery>;
+export type GetChatInfoQueryResult = Apollo.QueryResult<GetChatInfoQuery, GetChatInfoQueryVariables>;
+export const GetChatMessagesDocument = gql`
+    query GetChatMessages($id: ID!, $offset: Int = 0, $first: Int = 10) {
+  chat(id: $id) {
+    id
+    messages(offset: $offset, first: $first) {
+      ...MessageField
+    }
+  }
+}
+    ${MessageFieldFragmentDoc}`;
+
+/**
+ * __useGetChatMessagesQuery__
+ *
+ * To run a query within a React component, call `useGetChatMessagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChatMessagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChatMessagesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      offset: // value for 'offset'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useGetChatMessagesQuery(baseOptions: Apollo.QueryHookOptions<GetChatMessagesQuery, GetChatMessagesQueryVariables> & ({ variables: GetChatMessagesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChatMessagesQuery, GetChatMessagesQueryVariables>(GetChatMessagesDocument, options);
+      }
+export function useGetChatMessagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChatMessagesQuery, GetChatMessagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChatMessagesQuery, GetChatMessagesQueryVariables>(GetChatMessagesDocument, options);
+        }
+export function useGetChatMessagesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetChatMessagesQuery, GetChatMessagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetChatMessagesQuery, GetChatMessagesQueryVariables>(GetChatMessagesDocument, options);
+        }
+export type GetChatMessagesQueryHookResult = ReturnType<typeof useGetChatMessagesQuery>;
+export type GetChatMessagesLazyQueryHookResult = ReturnType<typeof useGetChatMessagesLazyQuery>;
+export type GetChatMessagesSuspenseQueryHookResult = ReturnType<typeof useGetChatMessagesSuspenseQuery>;
+export type GetChatMessagesQueryResult = Apollo.QueryResult<GetChatMessagesQuery, GetChatMessagesQueryVariables>;
+export const GetChatMembersDocument = gql`
+    query GetChatMembers($id: ID!, $offset: Int = 0, $first: Int = 10) {
+  chat(id: $id) {
+    id
+    members(offset: $offset, first: $first) {
+      ...UserField
+    }
+  }
+}
+    ${UserFieldFragmentDoc}`;
+
+/**
+ * __useGetChatMembersQuery__
+ *
+ * To run a query within a React component, call `useGetChatMembersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChatMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChatMembersQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      offset: // value for 'offset'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useGetChatMembersQuery(baseOptions: Apollo.QueryHookOptions<GetChatMembersQuery, GetChatMembersQueryVariables> & ({ variables: GetChatMembersQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChatMembersQuery, GetChatMembersQueryVariables>(GetChatMembersDocument, options);
+      }
+export function useGetChatMembersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChatMembersQuery, GetChatMembersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChatMembersQuery, GetChatMembersQueryVariables>(GetChatMembersDocument, options);
+        }
+export function useGetChatMembersSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetChatMembersQuery, GetChatMembersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetChatMembersQuery, GetChatMembersQueryVariables>(GetChatMembersDocument, options);
+        }
+export type GetChatMembersQueryHookResult = ReturnType<typeof useGetChatMembersQuery>;
+export type GetChatMembersLazyQueryHookResult = ReturnType<typeof useGetChatMembersLazyQuery>;
+export type GetChatMembersSuspenseQueryHookResult = ReturnType<typeof useGetChatMembersSuspenseQuery>;
+export type GetChatMembersQueryResult = Apollo.QueryResult<GetChatMembersQuery, GetChatMembersQueryVariables>;
 export const NewMessageDocument = gql`
     subscription NewMessage($chatId: ID!) {
   newMessage(chatId: $chatId) {
@@ -1059,3 +1213,32 @@ export function useNewMessageSubscription(baseOptions: Apollo.SubscriptionHookOp
       }
 export type NewMessageSubscriptionHookResult = ReturnType<typeof useNewMessageSubscription>;
 export type NewMessageSubscriptionResult = Apollo.SubscriptionResult<NewMessageSubscription>;
+export const NewMessagesDocument = gql`
+    subscription NewMessages {
+  newEvent {
+    ...MessageEventField
+  }
+}
+    ${MessageEventFieldFragmentDoc}`;
+
+/**
+ * __useNewMessagesSubscription__
+ *
+ * To run a query within a React component, call `useNewMessagesSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNewMessagesSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewMessagesSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNewMessagesSubscription(baseOptions?: Apollo.SubscriptionHookOptions<NewMessagesSubscription, NewMessagesSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<NewMessagesSubscription, NewMessagesSubscriptionVariables>(NewMessagesDocument, options);
+      }
+export type NewMessagesSubscriptionHookResult = ReturnType<typeof useNewMessagesSubscription>;
+export type NewMessagesSubscriptionResult = Apollo.SubscriptionResult<NewMessagesSubscription>;

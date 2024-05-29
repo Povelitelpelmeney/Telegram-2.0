@@ -23,12 +23,46 @@ query GetAvailableChats($offset: Int = 0, $first: Int = 10) {
   }
 }
 
+query GetChatInfo($id: ID!) {
+  chat(id: $id) {
+    id
+    type
+    image
+    name
+    meta {
+      ...MetaField
+    }
+    owner {
+      ...UserField
+    }
+  }
+}
+
+query GetChatMessages($id: ID!, $offset: Int = 0, $first: Int = 10) {
+  chat(id: $id) {
+    id
+    messages(offset: $offset, first: $first) {
+      ...MessageField
+    }
+  }
+}
+
+query GetChatMembers($id: ID!, $offset: Int = 0, $first: Int = 10) {
+  chat(id: $id) {
+    id
+    members(offset: $offset, first: $first) {
+      ...UserField
+    }
+  }
+}
+
 fragment MessageField on Message {
+  id
+  chatId
   createdAt
   createdBy {
     ...UserField
   }
-  id
   meta {
     ...MetaField
   }

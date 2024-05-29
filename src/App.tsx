@@ -1,22 +1,20 @@
+import { memo } from "react";
+import { Provider } from "react-redux";
 import { ApolloProvider } from "@apollo/client";
 import { RouterProvider } from "react-router-dom";
-import { ThemeContext } from "./contexts";
-import { useDarkTheme } from "./hooks";
-import client from "./apollo";
-import router from "./routes";
+import { client, router, store } from "./lib";
+import ThemeProvider from "./contexts/ThemeContext";
 
-const App = () => {
-  const { theme, toggleTheme } = useDarkTheme();
-
+const App = memo(() => {
   return (
-    <div className="fixed flex h-screen w-screen flex-row bg-slate-100 dark:bg-slate-800">
+    <Provider store={store}>
       <ApolloProvider client={client}>
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeProvider>
           <RouterProvider router={router} />
-        </ThemeContext.Provider>
+        </ThemeProvider>
       </ApolloProvider>
-    </div>
+    </Provider>
   );
-};
+});
 
 export default App;

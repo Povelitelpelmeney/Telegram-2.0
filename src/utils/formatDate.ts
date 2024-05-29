@@ -2,13 +2,13 @@ const timeRegex = /^(?<date>\d{4}\/\d{2}\/\d{2})T(?<time>\d{2}:\d{2}:\d{2})/;
 
 const formatDate = (dateISO: string) => {
   const timestamp = timeRegex.exec(dateISO.replaceAll("-", "/"))?.groups;
-  if (timestamp === undefined) return new Date();
+  if (timestamp === undefined) return new Date(0);
 
   const event = new Date(timestamp.date + " " + timestamp.time + " GMT+00:00");
   return event;
 };
 
-const formatMessageDate = (dateISO: string) => {
+export const formatMessageDate = (dateISO: string) => {
   const today = new Date();
   const todayYear = today.toLocaleDateString("en-EN", { year: "numeric" });
   const todayDate = today.toLocaleDateString("en-EN", {
@@ -29,9 +29,10 @@ const formatMessageDate = (dateISO: string) => {
 
   if (year !== todayYear) return date + " " + year + " " + time;
   else if (date !== todayDate) return date + " " + time;
+  else return time
 };
 
-const formatChatDate = (dateISO: string) => {
+export const formatChatDate = (dateISO: string) => {
   const today = new Date();
   const timestamp = formatDate(dateISO);
 
@@ -47,5 +48,3 @@ const formatChatDate = (dateISO: string) => {
     return timestamp.toLocaleDateString("en-EN", { weekday: "short" });
   } else return timestamp.toLocaleDateString("en-EN");
 };
-
-export { formatMessageDate, formatChatDate };

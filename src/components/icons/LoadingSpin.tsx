@@ -1,14 +1,14 @@
+import { memo } from "react";
+
 type LoadingSpinProps = {
   className?: string;
 };
 
-const LoadingSpin = ({ className }: LoadingSpinProps) => {
+const LoadingSpin = memo(({ className }: LoadingSpinProps) => {
   return (
     <svg
       className={className}
       xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
       viewBox="0 0 24 24"
     >
       <path
@@ -22,6 +22,6 @@ const LoadingSpin = ({ className }: LoadingSpinProps) => {
       />
     </svg>
   );
-};
+});
 
 export default LoadingSpin;

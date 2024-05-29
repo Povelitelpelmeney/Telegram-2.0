@@ -9,8 +9,7 @@ mutation CreateChat($type: ChatType!, $name: String!, $members: [String!]!) {
     type
     name
     owner {
-      image
-      name
+      ...UserField
     }
   }
 }
@@ -29,33 +28,13 @@ mutation DeleteChat($id: ID!) {
 
 mutation SendMessage($chatId: ID!, $text: String!) {
   sendMessage(chatId: $chatId, text: $text) {
-    id
-    createdAt
-    createdBy {
-      name
-      image
-    }
-    text
-    meta {
-      key
-      val
-    }
+    ...MessageField
   }
 }
 
 mutation EditMessage($chatId: ID!, $messageId: ID!, $text: String!) {
   editMessage(chatId: $chatId, messageId: $messageId, text: $text) {
-    id
-    createdAt
-    createdBy {
-      name
-      image
-    }
-    text
-    meta {
-      key
-      val
-    }
+    ...MessageField
   }
 }
 
@@ -75,16 +54,33 @@ mutation UpsertMessageMeta(
     key: $key
     val: $val
   ) {
-    id
-    createdAt
-    createdBy {
-      name
-      image
-    }
-    text
-    meta {
-      key
-      val
-    }
+    ...MessageField
   }
+}
+
+fragment MessageField on Message {
+  id
+  chatId
+  createdAt
+  createdBy {
+    ...UserField
+  }
+  meta {
+    ...MetaField
+  }
+  text
+}
+
+fragment UserField on User {
+  image
+  login
+  meta {
+    ...MetaField
+  }
+  name
+}
+
+fragment MetaField on Meta {
+  key
+  val
 }

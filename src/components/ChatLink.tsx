@@ -1,69 +1,56 @@
-import { NavLink } from "react-router-dom";
-import { ChatType, Message, Meta, Scalars } from "../graphql";
+import { memo } from "react";
+import { Link } from "react-router-dom";
+import { Scalars, ChatType, Message } from "../graphql";
 import { formatChatDate, formatImage } from "../utils";
-import { useEffect } from "react";
 
 type ChatLinkProps = {
   id: Scalars["ID"]["output"];
   type: ChatType;
-  image?: Scalars["Base64"]["output"];
-  name: Scalars["String"]["output"];
+  image: Scalars["Base64"]["output"];
   lastMessage?: Message;
-  meta: Meta[];
-  subscribeToNewMessages: () => void;
+  name: Scalars["String"]["output"];
 };
 
-const ChatLink = ({
-  id,
-  type,
-  image,
-  name,
-  lastMessage,
-  meta,
-  subscribeToNewMessages,
-}: ChatLinkProps) => {
-  useEffect(() => {
-    subscribeToNewMessages();
-  }, [subscribeToNewMessages]);
-
-  return (
-    <NavLink
-      className={({ isActive }) =>
-        `grid h-20 w-full cursor-pointer select-none grid-cols-[auto,_auto,_auto,_1fr] rounded-2xl ${isActive ? "dark bg-indigo-600" : "hover:bg-slate-200 dark:hover:bg-slate-700"}`
-      }
-      to={`/${id}`}
-    >
-      <>
-        <span className="row-span-2 m-2 flex h-16 w-16 content-center justify-center rounded-full border-2 border-black bg-white p-1">
-          <img src={formatImage({ base64: image, hash: id })} alt="Image" />
+const ChatLink = memo(
+  ({ id, type, image, lastMessage, name }: ChatLinkProps) => {
+    return (
+      <Link
+        className="grid h-20 w-full grid-cols-[auto,_auto,_1fr] space-x-4 rounded-2xl p-2 hover:bg-slate-200 dark:hover:bg-slate-800"
+        to={id}
+      >
+        <span className="row-span-2 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200 shadow-[0_0_1px_2px] shadow-slate-400">
+          <img
+            src={formatImage({ base64: image, hash: id })}
+            alt="Chat image"
+          />
         </span>
-        <p className="col-span-2 overflow-hidden text-ellipsis pt-2 text-lg font-semibold dark:text-slate-50">
+        <p className="overflow-hidden text-ellipsis text-nowrap text-lg font-semibold dark:text-white">
           {name}
         </p>
         {lastMessage && (
           <>
-            <p className="justify-self-end pr-2 pt-2.5 text-base text-slate-600 dark:text-slate-300">
+            <p className="justify-self-end text-nowrap text-slate-600 dark:text-slate-300">
               {formatChatDate(lastMessage.createdAt)}
             </p>
             {type === ChatType.Group ? (
-              <>
-                <p className="col-start-2 row-start-2 overflow-hidden text-ellipsis pb-2 text-base font-semibold dark:text-slate-50">
+              <div className="col-span-2 col-start-2 row-start-2 flex flex-row space-x-1">
+                <p className="min-w-fit overflow-hidden text-ellipsis text-nowrap font-semibold dark:text-white">
                   {lastMessage.createdBy.name}:
                 </p>
-                <p className="col-span-2 row-start-2 overflow-hidden text-ellipsis pl-1 text-slate-600 dark:text-slate-300">
+                <p className="overflow-hidden text-ellipsis text-nowrap text-slate-600 dark:text-slate-300">
                   {lastMessage.text}
                 </p>
-              </>
+              </div>
             ) : (
-              <p className="col-span-3 col-start-2 row-start-2 overflow-hidden text-ellipsis pb-2 text-slate-600 dark:text-slate-300">
+              <p className="col-span-2 col-start-2 row-start-2 overflow-hidden text-ellipsis text-nowrap text-slate-600 dark:text-slate-300">
                 {lastMessage.text}
               </p>
             )}
           </>
         )}
-      </>
-    </NavLink>
-  );
-};
+      </Link>
+    );
+  },
+);
 
 export default ChatLink;
