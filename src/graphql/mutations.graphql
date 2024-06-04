@@ -20,7 +20,7 @@ mutation InviteUser($chatId: ID!, $login: String!) {
   inviteUser(login: $login, chatId: $chatId)
 }
 
-mutation KickeUser($chatId: ID!, $login: String!) {
+mutation KickUser($chatId: ID!, $login: String!) {
   kickUser(login: $login, chatId: $chatId)
 }
 

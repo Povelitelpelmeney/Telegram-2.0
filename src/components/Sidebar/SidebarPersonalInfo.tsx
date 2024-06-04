@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { useChatQuery } from "../../graphql/index";
-
 import SidebarInfo from "./Sidebar";
+import { useMeQuery } from "../../graphql/index";
+
 type SidebarType = {
   isOpen: boolean;
   setOpen: () => void;
 };
-const SidebarChatInfo = (Sidebar: SidebarType) => {
+
+const SidebarPersonalInfo = (Sidebar: SidebarType) => {
   const { isOpen, setOpen } = Sidebar;
   const handleEditAvatar = () => {
     alert("Edit Avatar clicked");
@@ -16,28 +17,25 @@ const SidebarChatInfo = (Sidebar: SidebarType) => {
     alert("Edit Channel Name clicked");
   };
 
-  const handleDeleteChannel = () => {
+  const handleLogout = () => {
     alert("Delete Channel clicked");
   };
-  const { data, loading, error } = useChatQuery({
-    variables: {
-      id: "d",
-    },
+  const { data, loading, error } = useMeQuery({
+    variables: {},
   });
-
   return (
     <div>
       <SidebarInfo
         isOpen={isOpen}
         setOpen={setOpen}
-        avatar={data?.chat?.image}
-        channelName={data?.chat?.name ? data?.chat?.name : ""}
+        avatar={data?.me?.image}
+        name={data?.me?.name ? data?.me?.name : ""}
         onEditAvatar={handleEditAvatar}
         onEditChannelName={handleEditChannelName}
-        onDeleteChannel={handleDeleteChannel}
+        onLogout={handleLogout}
       />
     </div>
   );
 };
 
-export default SidebarChatInfo;
+export default SidebarPersonalInfo;
