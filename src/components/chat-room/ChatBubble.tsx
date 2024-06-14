@@ -24,7 +24,7 @@ const ChatBubble = memo(({ message }: ChatBubbleProps) => {
         chat.chat &&
         (me.me?.login === message.createdBy.login ? (
           <div className="m-3 flex flex-row items-end ml-auto gap-3">
-            <div className="flex h-fit max-w-lg flex-wrap flex-row rounded-l-xl rounded-tr-xl bg-white p-2.5">
+            <div className="flex h-fit max-w-lg flex-wrap flex-row rounded-l-xl rounded-tr-xl bg-green-100 dark:bg-purple-300 p-2.5">
                 <div className="whitespace-pre-wrap text-wrap break-all align-baseline text-base ">
                   {message.text}
                 </div>
@@ -47,7 +47,7 @@ const ChatBubble = memo(({ message }: ChatBubbleProps) => {
                 />
               </span>
             )}
-            <div className="flex h-fit max-w-lg flex-col rounded-r-xl rounded-tl-xl bg-white p-2.5">
+            <div className="flex h-fit max-w-lg flex-col rounded-r-xl rounded-tl-xl bg-green-100 dark:bg-purple-300 p-2.5">
               {chat.chat.type !== ChatType.Private && (
                 <div className="mb-1 w-full text-base font-semibold">
                   {message.createdBy.name}
