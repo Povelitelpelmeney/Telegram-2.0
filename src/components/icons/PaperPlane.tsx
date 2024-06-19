@@ -1,10 +1,7 @@
 import { memo } from "react";
+import { IconProps } from ".";
 
-type PaperPlaneProps = {
-  className?: string;
-};
-
-const PaperPlane = memo(({ className }: PaperPlaneProps) => {
+const PaperPlane = memo(({ className }: IconProps) => {
   return (
     <svg
       className={className}

@@ -1,21 +1,19 @@
 import { memo, useEffect } from "react";
-import { useMatch, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { setChat } from "../features/chat/chatSlice";
-import { useAppDispatch, useAppSelector, useMediaQuery } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import {
   MessageFieldFragmentDoc,
   useNewMessagesSubscription,
 } from "../graphql";
-import Sidebar from "../components/Sidebar";
 import ChatRoom from "../components/chat-room/ChatRoom";
+import SidebarProvider, { Sidebar } from "../contexts/SidebarContext";
 
 const Home = memo(() => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const token = useAppSelector((state) => state.token);
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const isHome = useMatch("/");
-  const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 
   useNewMessagesSubscription({
     onData: ({ client, data }) => {
@@ -51,16 +49,11 @@ const Home = memo(() => {
 
   return (
     <div className="fixed flex h-screen w-screen flex-row bg-slate-50 dark:bg-slate-950">
-      {isLargeScreen ? (
-        <>
-          <Sidebar />
-          <ChatRoom />
-        </>
-      ) : isHome ? (
-        <Sidebar />
-      ) : (
-        <ChatRoom />
-      )}
+      <SidebarProvider
+        className="m-0 grid h-full w-full border-2 border-slate-100 p-0 shadow lg:w-1/4 dark:border-slate-900"
+        initialSidebar={Sidebar.CHAT_LIST}
+      />
+      <ChatRoom />
     </div>
   );
 });

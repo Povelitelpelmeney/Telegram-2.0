@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import { Scalars, ChatType, Message } from "../graphql";
-import { formatChatDate, formatImage } from "../utils";
+import { Scalars, ChatType, Message } from "../../../graphql";
+import { formatChatDate, formatImage } from "../../../utils";
 
 type ChatLinkProps = {
   id: Scalars["ID"]["output"];
@@ -15,7 +15,7 @@ const ChatLink = memo(
   ({ id, type, image, lastMessage, name }: ChatLinkProps) => {
     return (
       <Link
-        className="grid h-20 w-full grid-cols-[auto,_auto,_1fr] space-x-4 rounded-2xl p-2 hover:bg-slate-200 dark:hover:bg-slate-800"
+        className="grid h-20 w-full select-none grid-cols-[auto,_auto,_1fr] space-x-4 rounded-2xl p-2 hover:bg-slate-200 dark:hover:bg-slate-800"
         to={id}
       >
         <span className="row-span-2 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200 shadow-[0_0_1px_2px] shadow-slate-400">

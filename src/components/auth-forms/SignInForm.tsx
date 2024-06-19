@@ -82,7 +82,7 @@ const SignInForm = memo(() => {
         >
           Sign in
           {loading && (
-            <LoadingSpin className="mb-0.5 ml-1 inline-block animate-spin" />
+            <LoadingSpin className="mb-0.5 ml-1 inline-block h-4 w-4 animate-spin" />
           )}
         </button>
         <p

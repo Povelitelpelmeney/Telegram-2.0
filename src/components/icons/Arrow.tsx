@@ -1,10 +1,7 @@
 import { memo } from "react";
+import { IconProps } from ".";
 
-type ArrowProps = {
-  className?: string;
-};
-
-const Arrow = memo(({ className }: ArrowProps) => {
+const Arrow = memo(({ className }: IconProps) => {
   return (
     <svg
       className={className}

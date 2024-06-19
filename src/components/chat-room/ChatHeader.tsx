@@ -16,7 +16,7 @@ const ChatHeader = memo(({ id }: ChatHeaderProps) => {
   return (
     <header className="flex h-16 w-full flex-row items-center justify-center border-2 bg-slate-100 dark:border-black dark:bg-slate-900">
       {loading && (
-        <div className="flex h-full w-full flex-row space-x-4 px-4 py-1.5 animate-pulse">
+        <div className="flex h-full w-full animate-pulse flex-row space-x-4 px-4 py-1.5">
           <div className="h-12 w-12 rounded-full bg-slate-300 dark:bg-slate-700" />
           <div className="mt-2.5 h-2 w-36 rounded bg-slate-300 dark:bg-slate-700" />
         </div>
@@ -32,7 +32,7 @@ const ChatHeader = memo(({ id }: ChatHeaderProps) => {
         <>
           {!isLargeScreen && (
             <Link
-              className="flex h-12 w-12 items-center justify-center pl-2"
+              className="flex h-12 w-12 select-none items-center justify-center pl-2"
               to="/"
             >
               <Arrow className="h-10 w-10 rotate-180 text-slate-500 dark:text-slate-400" />

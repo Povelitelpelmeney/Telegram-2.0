@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { useAppSelector } from "../hooks";
 
 type InfiniteScrollProps = {
   loadMore: () => Promise<void>;
@@ -21,9 +21,10 @@ const InfiniteScroll = memo(({ loadMore }: InfiniteScrollProps) => {
     setIsLoading(true);
     loadMore()
       .then(() => setIsLoading(false))
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
         setIsOver(true);
+        console.error(error);
       });
   }, [inView, isLoading, isOver]); // eslint-disable-line react-hooks/exhaustive-deps
 

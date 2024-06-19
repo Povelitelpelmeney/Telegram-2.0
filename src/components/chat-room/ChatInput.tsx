@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef } from "react";
+import { KeyboardEvent, memo, useCallback, useEffect, useRef } from "react";
 import {
   ChatType,
   Scalars,
@@ -24,18 +24,19 @@ const ChatInput = memo(({ id }: ChatInputProps) => {
     inputRef.current && (inputRef.current.textContent = "");
   }, [id, sendMessage]);
 
-  useEffect(() => {
-    const submitOnEnter = (e: HTMLElementEventMap["keypress"]) => {
+  const submitOnEnter = useCallback(
+    (e: KeyboardEvent<HTMLDivElement>) => {
       if (["Enter", "NumpadEnter"].includes(e.code) && !e.shiftKey) {
         e.preventDefault();
         handleSubmit();
       }
-    };
+    },
+    [handleSubmit],
+  );
 
-    inputRef.current?.addEventListener("keypress", submitOnEnter);
-    const inputRefCopy = inputRef.current;
-    return () => inputRefCopy?.removeEventListener("keypress", submitOnEnter);
-  }, [handleSubmit, inputRef]);
+  useEffect(() => {
+    inputRef.current && (inputRef.current.textContent = "");
+  }, [id]);
 
   return (
     <footer className="mt-auto flex max-h-[25%] w-full flex-row justify-center p-4">
@@ -47,6 +48,7 @@ const ChatInput = memo(({ id }: ChatInputProps) => {
             <div
               className="max-h-full w-3/4 overflow-y-auto overflow-x-hidden rounded border-2 bg-slate-200 p-1 shadow-[0_0_1px_1px] shadow-slate-400 lg:w-1/2 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:shadow-slate-900"
               contentEditable="plaintext-only"
+              onKeyDown={submitOnEnter}
               ref={inputRef}
             />
             <button

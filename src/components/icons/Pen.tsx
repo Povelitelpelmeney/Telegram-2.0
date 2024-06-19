@@ -1,10 +1,7 @@
 import { memo } from "react";
+import { IconProps } from ".";
 
-type PenProps = {
-  className?: string;
-};
-
-const Pen = memo(({ className }: PenProps) => {
+const Pen = memo(({ className }: IconProps) => {
   return (
     <svg
       className={className}

@@ -1,10 +1,7 @@
 import { memo } from "react";
+import { IconProps } from ".";
 
-type LoadingSpinProps = {
-  className?: string;
-};
-
-const LoadingSpin = memo(({ className }: LoadingSpinProps) => {
+const LoadingSpin = memo(({ className }: IconProps) => {
   return (
     <svg
       className={className}
