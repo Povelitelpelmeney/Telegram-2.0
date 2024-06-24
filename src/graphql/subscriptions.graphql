@@ -1,21 +1,47 @@
 subscription NewMessage($chatId: ID!) {
   newMessage(chatId: $chatId) {
-    id
-    createdAt
-    createdBy {
-      name
-      image
-    }
-    text
-    meta {
-      key
-      val
-    }
+    ...MessageField
   }
 }
 
-subscription NewEvent {
+subscription NewMessages {
   newEvent {
-    __typename
+    ...MessageEventField
   }
+}
+
+fragment MessageEventField on MessageEvent {
+  chat {
+    id
+  }
+  message {
+    ...MessageField
+  }
+}
+
+fragment MessageField on Message {
+  id
+  chatId
+  createdAt
+  createdBy {
+    ...UserField
+  }
+  meta {
+    ...MetaField
+  }
+  text
+}
+
+fragment UserField on User {
+  image
+  login
+  meta {
+    ...MetaField
+  }
+  name
+}
+
+fragment MetaField on Meta {
+  key
+  val
 }

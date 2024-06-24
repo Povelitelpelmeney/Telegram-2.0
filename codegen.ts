@@ -9,7 +9,7 @@ const config: CodegenConfig = {
   schema: process.env.HTTP_GRAPHQL_ENDPOINT,
   documents: "src/graphql/**/*.graphql",
   generates: {
-    "src/graphql/index.tsx": {
+    "src/graphql/index.ts": {
       plugins: [
         {
           add: {

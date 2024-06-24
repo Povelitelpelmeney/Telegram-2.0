@@ -2,14 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
-    .hover-text{
-        @apply hover:bg-violet-100 dark:hover:bg-violet-500;
-    }
-    .text-color{
-        @apply text-slate-950  dark:text-slate-100;
-    }
-    .border-radius{
-        @apply rounded-r-lg dark:rounded-r-lg;
-    }
+<<<<<<< HEAD @layer base {
+  .hover-text {
+    @apply hover:bg-violet-100 dark:hover:bg-violet-500;
+  }
+  .text-color {
+    @apply text-slate-950  dark:text-slate-100;
+  }
+  .border-radius {
+    @apply rounded-r-lg dark:rounded-r-lg;
+  }
+}
+======= ::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #555;
 }

@@ -1,23 +1,20 @@
-import { useGetChatsQuery } from "./graphql";
+import { memo } from "react";
+import { Provider } from "react-redux";
+import { ApolloProvider } from "@apollo/client";
+import { RouterProvider } from "react-router-dom";
+import { client, router, store } from "./lib";
+import ThemeProvider from "./contexts/ThemeContext";
 
-const App = () => {
-  const { data, error, loading } = useGetChatsQuery({
-    variables: { offset: 0, first: 10 },
-  });
-
-  if (loading)
-    return <p className="text-3xl text-blue-600 underline">Loading...</p>;
-  if (error) return <p className="text-3xl text-red-600 underline">Error!</p>;
-
+const App = memo(() => {
   return (
-    <div className="flex flex-row">
-      {data?.chats.map(({ id, name }) => (
-        <p key={id} className="text-2xl text-slate-400 underline">
-          {name}
-        </p>
-      ))}
-    </div>
+    <Provider store={store}>
+      <ApolloProvider client={client}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </ApolloProvider>
+    </Provider>
   );
-};
+});
 
 export default App;
