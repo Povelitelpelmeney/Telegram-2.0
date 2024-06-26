@@ -5,7 +5,10 @@ import { useSignInLazyQuery } from "../../graphql";
 import { useAppDispatch } from "../../hooks";
 import { setToken } from "../../features/token/tokenSlice";
 import { LoadingSpin } from "../icons";
-import { setActiveChat } from "../../features/chat/chatSlice";
+import {
+  readAllNotifications,
+  setActiveChat,
+} from "../../features/chat/chatSlice";
 
 type SignInFormDataType = {
   login: string;
@@ -27,6 +30,7 @@ const SignInForm = memo(() => {
     onCompleted: (data) => {
       dispatch(setToken(data.signIn!));
       dispatch(setActiveChat(""));
+      dispatch(readAllNotifications());
       client.resetStore();
     },
   });

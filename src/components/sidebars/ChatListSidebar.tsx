@@ -60,7 +60,7 @@ const ChatListSidebar = memo(() => {
   }, [data]);
 
   return (
-    <div className="col-[1] row-[1] flex h-full w-0 min-w-full flex-col items-center overflow-y-auto border-2 bg-slate-100 dark:border-black dark:bg-slate-900">
+    <div className="col-[1] row-[1] flex h-full w-0 min-w-full flex-col items-center overflow-y-auto overflow-x-hidden border-2 bg-slate-100 dark:border-black dark:bg-slate-900">
       <header className="h-15 sticky top-0 flex w-full flex-row border-b-2 border-b-black bg-slate-100 px-2 dark:border-b-white dark:bg-slate-900">
         <div
           className={`mr-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition hover:bg-slate-200 dark:hover:bg-slate-800 ${controlsMenuActive && "rotate-90"}`}
@@ -103,7 +103,7 @@ const ChatListSidebar = memo(() => {
           Logout
         </p>
       </ContextMenu>
-      <main className="flex size-full flex-col items-center overflow-y-auto p-1">
+      <main className="flex size-full flex-col items-center overflow-y-auto overflow-x-hidden p-1">
         {data && (
           <>
             {data.chats.map((chat) => (

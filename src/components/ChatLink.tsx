@@ -47,24 +47,30 @@ const ChatLink = memo(
               <p className="min-w-fit overflow-hidden text-ellipsis text-nowrap font-semibold dark:text-white">
                 {lastMessage.createdBy.name}:
               </p>
-              <div className="inline-flex w-full overflow-hidden text-ellipsis text-nowrap text-slate-600 dark:text-slate-300">
-                {lastMessage.text}
-                {notifiedChats.includes(id) && (
-                  <div
-                    className={`ml-auto mr-1 mt-1 size-5 rounded-full bg-blue-500 shadow-[0_0_0_2px] shadow-blue-600 dark:bg-indigo-500 dark:shadow-indigo-600 ${mutedChats.includes(id) && "bg-slate-400 shadow-slate-500 dark:bg-slate-500 dark:shadow-slate-600"}`}
-                  />
-                )}
+              <div className="table w-full table-fixed text-slate-600 dark:text-slate-300">
+                <p className="mr-1 table-cell w-[95%] overflow-hidden text-ellipsis whitespace-nowrap text-nowrap">
+                  {lastMessage.text}
+                </p>
               </div>
-            </div>
-          ) : (
-            <div className="col-span-2 col-start-2 row-start-2 inline-flex overflow-hidden text-ellipsis text-nowrap text-slate-600 dark:text-slate-300">
-              {lastMessage.text}
               {notifiedChats.includes(id) && (
                 <div
-                  className={`ml-auto mr-1 mt-1 size-5 rounded-full bg-blue-500 shadow-[0_0_0_2px] shadow-blue-600 dark:bg-indigo-500 dark:shadow-indigo-600 ${mutedChats.includes(id) && "bg-slate-400 shadow-slate-500 dark:bg-slate-500 dark:shadow-slate-600"}`}
+                  className={`ml-auto mr-1 mt-0.5 size-5 min-h-5 min-w-5 rounded-full bg-blue-500 shadow-[0_0_0_2px] shadow-blue-600 dark:bg-indigo-500 dark:shadow-indigo-600 ${mutedChats.includes(id) && "bg-slate-400 shadow-slate-500 dark:bg-slate-500 dark:shadow-slate-600"}`}
                 />
               )}
             </div>
+          ) : (
+            <>
+              <div className="col-span-2 col-start-2 row-start-2 table w-full table-fixed text-slate-600 dark:text-slate-300">
+                <p className="mr-1 table-cell w-[95%] overflow-hidden text-ellipsis whitespace-nowrap text-nowrap">
+                  {lastMessage.text}
+                </p>
+              </div>
+              {notifiedChats.includes(id) && (
+                <div
+                  className={`ml-auto mr-1 mt-0.5 size-5 min-h-5 min-w-5 rounded-full bg-blue-500 shadow-[0_0_0_2px] shadow-blue-600 dark:bg-indigo-500 dark:shadow-indigo-600 ${mutedChats.includes(id) && "bg-slate-400 shadow-slate-500 dark:bg-slate-500 dark:shadow-slate-600"}`}
+                />
+              )}
+            </>
           ))}
       </Link>
     );

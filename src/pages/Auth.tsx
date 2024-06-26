@@ -12,6 +12,10 @@ const Auth = memo(({ type }: AuthProps) => {
   const token = useAppSelector((state) => state.token);
 
   useEffect(() => {
+    document.title = "Kilogram";
+  }, []);
+
+  useEffect(() => {
     if (token) navigate("/");
   }, [token, navigate]);
 

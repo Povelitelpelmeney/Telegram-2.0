@@ -33,9 +33,17 @@ const chatsSlice = createSlice({
     readNotification(state, action: PayloadAction<string>) {
       state.notified = state.notified.filter((chat) => chat !== action.payload);
     },
+    readAllNotifications(state) {
+      state.notified = [];
+    },
   },
 });
 
-export const { setActiveChat, muteChat, notifyChat, readNotification } =
-  chatsSlice.actions;
+export const {
+  setActiveChat,
+  muteChat,
+  notifyChat,
+  readNotification,
+  readAllNotifications,
+} = chatsSlice.actions;
 export default chatsSlice.reducer;
