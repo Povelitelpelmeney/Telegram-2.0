@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import { Scalars, ChatType, Message } from "../graphql";
+import { Scalars, ChatType, Message, useMeQuery } from "../graphql";
 import { formatChatDate, formatImage } from "../utils";
 import { Muted } from "./icons";
 import { useAppDispatch, useAppSelector } from "../hooks";
@@ -19,6 +19,7 @@ const ChatLink = memo(
     const activeChat = useAppSelector((state) => state.chats.active);
     const mutedChats = useAppSelector((state) => state.chats.muted);
     const notifiedChats = useAppSelector((state) => state.chats.notified);
+    const { data: meData } = useMeQuery();
     const dispatch = useAppDispatch();
 
     return (
@@ -45,7 +46,10 @@ const ChatLink = memo(
           <div className="col-span-2 col-start-2 row-start-2 flex flex-row space-x-1">
             {type === ChatType.Group && (
               <p className="min-w-fit overflow-hidden text-ellipsis text-nowrap font-semibold dark:text-white">
-                {lastMessage.createdBy.name}:
+                {lastMessage.createdBy.login === meData?.me?.login
+                  ? "You"
+                  : lastMessage.createdBy.name}
+                :
               </p>
             )}
             <div className="table w-full table-fixed text-slate-600 dark:text-slate-300">
