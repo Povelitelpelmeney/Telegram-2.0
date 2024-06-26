@@ -6,13 +6,13 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { useMeQuery, useNewMessagesSubscription } from "../graphql";
 import SidebarProvider, { SidebarType } from "../contexts/SidebarContext";
 import ChatRoom from "../components/chat-room/ChatRoom";
-import notificationSound from "../assets/notification.mp3";
+import NotificationSound from "../assets/notification.mp3";
 
 const Home = memo(() => {
   const { id } = useParams();
   const navigate = useNavigate();
   const atRoot = useMatch("/");
-  const [playNotificationSound] = useSound(notificationSound);
+  const [playNotificationSound] = useSound(NotificationSound);
   const dispatch = useAppDispatch();
   const token = useAppSelector((state) => state.token);
   const notifiedChats = useAppSelector((state) => state.chats.notified);

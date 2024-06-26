@@ -48,15 +48,17 @@ const ContextMenu = memo(
     );
 
     const adjustPosition = useCallback((e: MouseEvent) => {
-      const rect = menuRef.current?.getBoundingClientRect();
+      const node = menuRef.current;
+      const rect = node?.getBoundingClientRect();
+      const parentRect = node?.parentElement?.getBoundingClientRect();
 
-      if (!rect) return;
+      if (!node || !rect || !parentRect) return;
 
       let x = e.clientX;
       let y = e.clientY;
 
-      if (x + rect.width > window.innerWidth) x -= rect.width;
-      if (y + rect.height > window.innerHeight) y -= rect.height;
+      if (x + rect.width > parentRect.width) x -= rect.width;
+      if (y + rect.height > parentRect.height) y -= rect.height;
 
       setPosition({ x, y });
     }, []);
@@ -79,7 +81,7 @@ const ContextMenu = memo(
 
     return (
       <div
-        className={`${className} fixed transition-opacity ${!active && "invisible opacity-0"} ${active && " visible opacity-100"}`}
+        className={`${className} fixed transition-opacity ${!active && "invisible opacity-0"} ${active && "visible opacity-100"}`}
         style={{ top: position.y, left: position.x }}
         ref={menuRef}
       >
