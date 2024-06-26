@@ -41,7 +41,7 @@ const SignUpForm = memo(() => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="overflow-hidden text-ellipsis text-nowrap" onSubmit={handleSubmit}>
       <div className="mb-4">
         <label
           className="mb-2 block select-none text-sm font-bold text-slate-700 dark:text-slate-300"
@@ -108,7 +108,7 @@ const SignUpForm = memo(() => {
         </p>
       </div>
       {error && (
-        <p className="mt-2 inline-block select-none align-baseline text-sm font-semibold text-red-700 dark:text-red-500">
+        <p className="mt-2 inline-block select-none overflow-hidden text-ellipsis text-nowrap align-baseline text-sm font-semibold text-red-700 dark:text-red-500">
           {error.message}
         </p>
       )}

@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import {
   ChatType,
   MessageFieldFragmentDoc,
@@ -50,11 +50,14 @@ const ChatListSidebar = memo(() => {
     await fetchMore({
       variables: { offset },
       updateQuery: (prev, { fetchMoreResult }) => {
-        setOffset((prevOffset) => prevOffset + fetchMoreResult.chats.length);
         return { ...prev, chats: prev.chats.concat(fetchMoreResult.chats) };
       },
     });
   }, [fetchMore, offset]);
+
+  useEffect(() => {
+    if (data?.chats) setOffset(data.chats.length);
+  }, [data]);
 
   return (
     <div className="col-[1] row-[1] flex h-full w-0 min-w-full flex-col items-center overflow-y-auto border-2 bg-slate-100 dark:border-black dark:bg-slate-900">

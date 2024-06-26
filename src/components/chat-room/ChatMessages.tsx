@@ -12,6 +12,7 @@ import { Arrow } from "../icons";
 import { useAppDispatch, useAppSelector, useMediaQuery } from "../../hooks";
 import { readNotification } from "../../features/chat/chatSlice";
 import { useMatch } from "react-router-dom";
+
 type ChatMessagesProps = {
   id: Scalars["ID"]["output"];
 };
@@ -37,6 +38,7 @@ const ChatMessages = memo(({ id }: ChatMessagesProps) => {
       const newMessage = data.data.newEvent.message;
       if (newMessageChatId !== id) return;
       setChatMessages((prevMessages) => [newMessage, ...prevMessages]);
+      setOffset((prevOffset) => ++prevOffset);
 
       if (newMessage.createdBy.login === meData?.me?.login)
         setSentMessage(true);
@@ -49,7 +51,15 @@ const ChatMessages = memo(({ id }: ChatMessagesProps) => {
       fetchPolicy: "no-cache",
       onCompleted: (data) => {
         if (!data.chat) return;
-        if (data.chat?.messages.length === 0) return;
+        if (data.chat!.messages.length === 0) return;
+        if (
+          chatMessages.some((message) =>
+            data.chat!.messages.some(
+              (newMessage) => message.id === newMessage.id,
+            ),
+          )
+        )
+          return;
         setChatMessages((prevMessages) => [
           ...prevMessages,
           ...data.chat!.messages,
@@ -78,8 +88,8 @@ const ChatMessages = memo(({ id }: ChatMessagesProps) => {
   }, []);
 
   useEffect(() => {
-    setChatMessages([]);
     setOffset(0);
+    setChatMessages([]);
   }, [id]);
 
   useEffect(() => {

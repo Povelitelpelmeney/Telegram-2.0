@@ -17,7 +17,7 @@ const Auth = memo(({ type }: AuthProps) => {
 
   return (
     <div className="fixed flex h-screen w-screen flex-col items-center justify-center bg-slate-100 lg:bg-slate-200 dark:bg-slate-900 lg:dark:bg-slate-800">
-      <main className="mt-auto h-fit w-fit rounded-xl bg-slate-100 p-8 dark:bg-slate-900">
+      <main className="mt-auto h-fit w-fit max-w-full rounded-xl bg-slate-100 p-8 dark:bg-slate-900">
         {type === "signin" ? <SignInForm /> : <SignUpForm />}
       </main>
       <footer className="mb-2 mt-auto">

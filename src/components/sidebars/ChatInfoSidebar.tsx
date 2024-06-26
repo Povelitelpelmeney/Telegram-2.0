@@ -1,4 +1,11 @@
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import {
+  MouseEvent,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   ChatType,
   User,
@@ -37,7 +44,8 @@ const ChatInfoSidebar = memo(({ id }: ChatInfoSidebarProps) => {
   const [offset, setOffset] = useState(0);
   const { openSidebar, closeSidebar } = useSidebarNavigation();
 
-  const handleKickUser = (login: string) => {
+  const handleKickUser = (e: MouseEvent<HTMLDivElement>, login: string) => {
+    e.stopPropagation();
     kickUser({
       variables: { chatId: id, login },
       onCompleted: () => {
@@ -127,8 +135,14 @@ const ChatInfoSidebar = memo(({ id }: ChatInfoSidebarProps) => {
               <div className="flex size-60 flex-col overflow-y-auto rounded border-2">
                 {members.map((member) => (
                   <div
-                    className="relative flex h-12 w-full flex-row space-x-2 p-1 hover:bg-slate-200 dark:hover:bg-slate-800"
+                    className="relative cursor-pointer flex h-12 w-full flex-row space-x-2 p-1 hover:bg-slate-200 dark:hover:bg-slate-800"
                     key={member.login}
+                    onClick={() =>
+                      openSidebar({
+                        type: SidebarType.USER_INFO,
+                        id: member.login,
+                      })
+                    }
                   >
                     <span className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-slate-200 shadow-[0_0_1px_2px] shadow-slate-400">
                       <img
@@ -149,7 +163,7 @@ const ChatInfoSidebar = memo(({ id }: ChatInfoSidebarProps) => {
                       members.length > 3 && (
                         <div
                           className="absolute right-0 flex size-9 cursor-pointer items-center justify-center rounded-full transition-transform hover:bg-slate-300 active:scale-95 dark:hover:bg-slate-700"
-                          onClick={() => handleKickUser(member.login)}
+                          onClick={(e) => handleKickUser(e, member.login)}
                         >
                           <Cross className="size-8 p-1 text-red-600 dark:text-red-500" />
                         </div>
@@ -160,7 +174,7 @@ const ChatInfoSidebar = memo(({ id }: ChatInfoSidebarProps) => {
               </div>
             </div>
           )}
-          <label className="mt-auto justify-center inline-flex cursor-pointer space-x-2 p-2">
+          <label className="mt-auto inline-flex cursor-pointer justify-center space-x-2 p-2">
             <p className="dark:text-white">Notifications</p>
             <input
               className="peer sr-only"
