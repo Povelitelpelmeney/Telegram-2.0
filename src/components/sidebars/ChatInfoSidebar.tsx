@@ -161,7 +161,7 @@ const ChatInfoSidebar = memo(({ id }: ChatInfoSidebarProps) => {
             </div>
           )}
           <label className="mt-auto justify-center inline-flex cursor-pointer space-x-2 p-2">
-            <p>Notifications</p>
+            <p className="dark:text-white">Notifications</p>
             <input
               className="peer sr-only"
               type="checkbox"
