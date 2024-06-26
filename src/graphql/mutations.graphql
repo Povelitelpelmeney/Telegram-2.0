@@ -6,17 +6,29 @@ mutation SignUp($login: String!, $password: String!, $name: String!) {
 
 mutation CreateChat($type: ChatType!, $name: String!, $members: [String!]!) {
   createChat(type: $type, members: $members, name: $name) {
+    id
     type
-    name
-    owner {
-      ...UserField
+    image
+    messages(first: 1) {
+      ...MessageField
     }
+    meta {
+      ...MetaField
+    }
+    name
   }
 }
-mutation UpdateUser($image: Base64, $name: String) {
-  updateUser(image: $image, name: $name) {
+
+mutation UpdateChat($id: ID!, $image: Base64, $name: String) {
+  updateChat(id: $id, image: $image, name: $name) {
     image
     name
+  }
+}
+
+mutation UpdateUser($image: Base64, $name: String) {
+  updateUser(image: $image, name: $name) {
+    ...UserField
   }
 }
 

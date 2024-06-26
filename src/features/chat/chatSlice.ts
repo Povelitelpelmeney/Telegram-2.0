@@ -1,18 +1,41 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type ChatState = string;
+type ChatsState = {
+  active: string;
+  muted: string[];
+  notified: string[];
+};
 
-const initialState: ChatState = "";
+const mutedChats = localStorage.getItem("muted");
 
-const chatSlice = createSlice({
-  name: "chat",
+const initialState: ChatsState = {
+  active: "",
+  muted: mutedChats ? JSON.parse(mutedChats) : [],
+  notified: [],
+};
+
+const chatsSlice = createSlice({
+  name: "chats",
   initialState,
   reducers: {
-    setChat(_, action: PayloadAction<string>) {
-      return action.payload;
+    setActiveChat(state, action: PayloadAction<string>) {
+      state.active = action.payload;
+    },
+    muteChat(state, action: PayloadAction<string>) {
+      state.muted.includes(action.payload)
+        ? (state.muted = state.muted.filter((chat) => chat !== action.payload))
+        : (state.muted = [...state.muted, action.payload]);
+    },
+    notifyChat(state, action: PayloadAction<string>) {
+      if (!state.notified.includes(action.payload))
+        state.notified = [...state.notified, action.payload];
+    },
+    readNotification(state, action: PayloadAction<string>) {
+      state.notified = state.notified.filter((chat) => chat !== action.payload);
     },
   },
 });
 
-export const { setChat } = chatSlice.actions;
-export default chatSlice.reducer;
+export const { setActiveChat, muteChat, notifyChat, readNotification } =
+  chatsSlice.actions;
+export default chatsSlice.reducer;

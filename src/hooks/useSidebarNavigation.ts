@@ -6,5 +6,7 @@ export const useSidebarNavigation = () => {
 
   if (context) return context;
   else
-    throw new Error("useTheme hook can only be used inside a SidebarProvider");
+    throw new Error(
+      "useSidebarNavigation hook can only be used inside a SidebarProvider",
+    );
 };

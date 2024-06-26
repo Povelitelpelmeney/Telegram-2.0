@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from "react";
+import { memo } from "react";
 import {
   ChatType,
   Message,
@@ -7,17 +7,19 @@ import {
 } from "../../graphql";
 
 import { formatImage, formatMessageDate } from "../../utils";
+import { useSidebarNavigation } from "../../hooks";
+import { SidebarType } from "../../contexts/SidebarContext";
 
 type ChatBubbleProps = {
   message: Message;
-  userSidebarFunction: (param: string) => void;
 };
 
-const ChatBubble = memo(({ message, userSidebarFunction }: ChatBubbleProps) => {
+const ChatBubble = memo(({ message }: ChatBubbleProps) => {
   const { data: me } = useMeQuery();
   const { data: chat } = useGetChatInfoQuery({
     variables: { id: message.chatId },
   });
+  const { openSidebar } = useSidebarNavigation();
 
   return (
     <div className="flex w-full items-center">
@@ -38,20 +40,24 @@ const ChatBubble = memo(({ message, userSidebarFunction }: ChatBubbleProps) => {
         ) : (
           <div className="m-3 flex flex-row items-end gap-3">
             {chat.chat.type === ChatType.Group && (
-              <label
-                onClick={() => userSidebarFunction(message.createdBy.login)}
+              <span
+                className="flex size-12 min-h-12 min-w-12 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-slate-200 shadow-[0_0_1px_2px] shadow-slate-400"
+                onClick={() =>
+                  openSidebar({
+                    type: SidebarType.USER_INFO,
+                    id: message.createdBy.login,
+                  })
+                }
               >
-                <span className="flex size-12 items-center justify-center rounded-full bg-slate-200 shadow-[0_0_1px_2px] shadow-slate-400">
-                  <img
-                    className="size-8 object-cover"
-                    src={formatImage({
-                      base64: message.createdBy.image,
-                      hash: message.createdBy.login,
-                    })}
-                    alt="Image"
-                  />
-                </span>
-              </label>
+                <img
+                  className="object-fill"
+                  src={formatImage({
+                    base64: message.createdBy.image,
+                    hash: message.createdBy.login,
+                  })}
+                  alt="Profile picture"
+                />
+              </span>
             )}
             <div className="flex h-fit max-w-lg flex-col rounded-r-xl rounded-tl-xl bg-green-100 p-2.5 dark:bg-purple-300">
               {chat.chat.type !== ChatType.Private && (

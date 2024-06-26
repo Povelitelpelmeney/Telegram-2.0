@@ -1,5 +1,6 @@
 import { FormEvent, memo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useApolloClient } from "@apollo/client";
 import { useSignInLazyQuery } from "../../graphql";
 import { useAppDispatch } from "../../hooks";
 import { setToken } from "../../features/token/tokenSlice";
@@ -18,22 +19,22 @@ const initialFormData: SignInFormDataType = {
 const SignInForm = memo(() => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const client = useApolloClient();
   const [formData, setFormData] = useState(initialFormData);
   const [signIn, { loading, error }] = useSignInLazyQuery({
     fetchPolicy: "network-only",
-    onCompleted: (data) => dispatch(setToken(data.signIn!)),
+    onCompleted: (data) => {
+      dispatch(setToken(data.signIn!));
+      client.resetStore();
+    },
   });
 
   const setLogin = (login: string) => {
-    setFormData((prevFormData) => {
-      return { ...prevFormData, login: login };
-    });
+    setFormData((prevFormData) => ({ ...prevFormData, login }));
   };
 
   const setPassword = (password: string) => {
-    setFormData((prevFormData) => {
-      return { ...prevFormData, password: password };
-    });
+    setFormData((prevFormData) => ({ ...prevFormData, password }));
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

@@ -32,7 +32,7 @@ const ContextMenu = memo(
 
     const closeMenu = useCallback(() => {
       setActive(false);
-    }, []);
+    }, [setActive]);
 
     const closeOnLeave = useCallback(
       (e: MouseEvent) => {
@@ -75,11 +75,11 @@ const ContextMenu = memo(
           window.removeEventListener("click", adjustPosition);
         };
       }
-    }, [active, closeMenu, closeOnLeave]);
+    }, [active, closeMenu, closeOnLeave, adjustPosition]);
 
     return (
       <div
-        className={`${className} fixed transition ${!active && "invisible opacity-0"} ${active && " visible opacity-100"}`}
+        className={`${className} fixed transition-opacity ${!active && "invisible opacity-0"} ${active && " visible opacity-100"}`}
         style={{ top: position.y, left: position.x }}
         ref={menuRef}
       >

@@ -24,21 +24,15 @@ const SignUpForm = memo(() => {
   });
 
   const setLogin = (login: string) => {
-    setFormData((prevFormData) => {
-      return { ...prevFormData, login: login };
-    });
+    setFormData((prevFormData) => ({ ...prevFormData, login }));
   };
 
   const setPassword = (password: string) => {
-    setFormData((prevFormData) => {
-      return { ...prevFormData, password: password };
-    });
+    setFormData((prevFormData) => ({ ...prevFormData, password }));
   };
 
   const setUsername = (name: string) => {
-    setFormData((prevFormData) => {
-      return { ...prevFormData, name: name };
-    });
+    setFormData((prevFormData) => ({ ...prevFormData, name }));
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

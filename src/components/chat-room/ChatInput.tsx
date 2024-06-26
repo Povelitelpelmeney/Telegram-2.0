@@ -10,10 +10,9 @@ import { PaperPlane } from "../icons";
 
 type ChatInputProps = {
   id: Scalars["ID"]["output"];
-  isSidebarOpened: boolean;
 };
 
-const ChatInput = memo(({ id, isSidebarOpened }: ChatInputProps) => {
+const ChatInput = memo(({ id }: ChatInputProps) => {
   const inputRef = useRef<HTMLDivElement>(null);
   const { data: chat } = useGetChatInfoQuery({ variables: { id } });
   const { data: me } = useMeQuery();
@@ -34,6 +33,7 @@ const ChatInput = memo(({ id, isSidebarOpened }: ChatInputProps) => {
     },
     [handleSubmit],
   );
+
   useEffect(() => {
     inputRef.current && (inputRef.current.textContent = "");
   }, [id]);
@@ -46,13 +46,13 @@ const ChatInput = memo(({ id, isSidebarOpened }: ChatInputProps) => {
           chat.chat.owner.login === me?.me?.login) && (
           <>
             <div
-              className={`${isSidebarOpened ? "-translate-x-36 transform" : ""} max-h-full w-3/4 overflow-y-auto overflow-x-hidden rounded border-2 bg-slate-200 p-1 shadow-[0_0_1px_1px] shadow-slate-400 transition-transform duration-300 lg:w-1/2 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:shadow-slate-900`}
+              className="max-h-full w-3/4 overflow-y-auto overflow-x-hidden rounded border-2 bg-slate-200 p-1 shadow-[0_0_1px_1px] shadow-slate-400 transition-transform duration-300 lg:w-1/2 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:shadow-slate-900"
               contentEditable="plaintext-only"
               onKeyDown={submitOnEnter}
               ref={inputRef}
             />
             <button
-              className={`${isSidebarOpened ? "-translate-x-36 transform" : ""} ml-3 mt-auto flex h-9 w-9 items-center rounded-full bg-blue-500 p-1 pl-2 shadow-[0_0_1px_2px] shadow-blue-600 transition transition-transform duration-300 hover:bg-blue-600 active:scale-95 dark:bg-indigo-500 dark:shadow-indigo-600 dark:hover:bg-indigo-600`}
+              className="ml-3 mt-auto flex h-9 w-9 items-center rounded-full bg-blue-500 p-1 pl-2 shadow-[0_0_1px_2px] shadow-blue-600 transition duration-300 hover:bg-blue-600 active:scale-95 dark:bg-indigo-500 dark:shadow-indigo-600 dark:hover:bg-indigo-600"
               onClick={handleSubmit}
             >
               <PaperPlane className="text-white" />

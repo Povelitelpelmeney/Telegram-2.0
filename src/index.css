@@ -2,18 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-<<<<<<< HEAD @layer base {
-  .hover-text {
-    @apply hover:bg-violet-100 dark:hover:bg-violet-500;
-  }
-  .text-color {
-    @apply text-slate-950  dark:text-slate-100;
-  }
-  .border-radius {
-    @apply rounded-r-lg dark:rounded-r-lg;
-  }
-}
-======= ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 5px;
 }
 
