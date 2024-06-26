@@ -18,7 +18,14 @@ const ChatHeader = memo(({ id }: ChatHeaderProps) => {
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
   const mutedChats = useAppSelector((state) => state.chats.muted);
   const { data, loading, error } = useGetChatInfoQuery({ variables: { id } });
-  const { openSidebar } = useSidebarNavigation();
+  const { openSidebar, closeSidebar, sidebars } = useSidebarNavigation();
+
+  const handleChatInfo = () => {
+    const lastSidebar = sidebars[sidebars.length - 1];
+    if (lastSidebar?.type === SidebarType.CHAT_INFO && lastSidebar?.id === id)
+      closeSidebar();
+    else openSidebar({ type: SidebarType.CHAT_INFO, id });
+  };
 
   return (
     <header className="flex h-16 w-full flex-row items-center justify-center border-2 bg-slate-100 dark:border-black dark:bg-slate-900">
@@ -48,7 +55,7 @@ const ChatHeader = memo(({ id }: ChatHeaderProps) => {
           <Link
             className="flex size-full flex-row space-x-4 px-4 py-1.5"
             to={`/${id}`}
-            onClick={() => openSidebar({ type: SidebarType.CHAT_INFO, id })}
+            onClick={handleChatInfo}
           >
             <span className="flex size-12 min-h-12 min-w-12 items-center justify-center overflow-hidden rounded-full bg-slate-200 shadow-[0_0_1px_2px] shadow-slate-400">
               <img
@@ -59,7 +66,9 @@ const ChatHeader = memo(({ id }: ChatHeaderProps) => {
             </span>
             <p className="inline-flex overflow-hidden text-ellipsis text-nowrap text-lg font-semibold dark:text-white">
               {data.chat.name}
-              {mutedChats.includes(id) && <Muted className="mt-1 ml-1 size-5" />}
+              {mutedChats.includes(id) && (
+                <Muted className="ml-1 mt-1 size-5" />
+              )}
             </p>
           </Link>
         </>

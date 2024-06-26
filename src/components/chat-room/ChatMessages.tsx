@@ -28,6 +28,7 @@ const ChatMessages = memo(({ id }: ChatMessagesProps) => {
   const { data: meData } = useMeQuery();
   const [getChatMessages] = useGetChatMessagesLazyQuery();
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
+  const [messagesToAppend, setMessagesToAppend] = useState<Message[]>([]);
   const [offset, setOffset] = useState(0);
   const [sentMessage, setSentMessage] = useState(false);
 
@@ -37,8 +38,8 @@ const ChatMessages = memo(({ id }: ChatMessagesProps) => {
       const newMessageChatId = data.data.newEvent.chat.id;
       const newMessage = data.data.newEvent.message;
       if (newMessageChatId !== id) return;
+      if (chatMessages.some((message) => newMessage.id === message.id)) return;
       setChatMessages((prevMessages) => [newMessage, ...prevMessages]);
-      setOffset((prevOffset) => ++prevOffset);
 
       if (newMessage.createdBy.login === meData?.me?.login)
         setSentMessage(true);
@@ -52,19 +53,8 @@ const ChatMessages = memo(({ id }: ChatMessagesProps) => {
       onCompleted: (data) => {
         if (!data.chat) return;
         if (data.chat!.messages.length === 0) return;
-        if (
-          chatMessages.some((message) =>
-            data.chat!.messages.some(
-              (newMessage) => message.id === newMessage.id,
-            ),
-          )
-        )
-          return;
-        setChatMessages((prevMessages) => [
-          ...prevMessages,
-          ...data.chat!.messages,
-        ]);
-        setOffset((prevOffset) => prevOffset + data.chat!.messages.length);
+        if (messagesToAppend.length > 0) return;
+        setMessagesToAppend(data.chat!.messages);
       },
     });
   }, [getChatMessages, id, offset]);
@@ -72,6 +62,26 @@ const ChatMessages = memo(({ id }: ChatMessagesProps) => {
   const scrollToBottom = useCallback(() => {
     containerRef.current?.scrollTo({ behavior: "smooth", top: 0 });
   }, []);
+
+  useEffect(() => {
+    setOffset(chatMessages.length);
+  }, [chatMessages]);
+
+  useEffect(() => {
+    if (
+      chatMessages.some((message) =>
+        messagesToAppend.some(
+          (newMessage) =>
+            message.id === newMessage.id || id !== newMessage.chatId,
+        ),
+      )
+    )
+      setMessagesToAppend([]);
+    else if (messagesToAppend.length > 0) {
+      setChatMessages((prevMessages) => [...prevMessages, ...messagesToAppend]);
+      setMessagesToAppend([]);
+    }
+  }, [chatMessages, messagesToAppend]);
 
   useEffect(() => {
     const eventHandler = () => {

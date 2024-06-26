@@ -432,7 +432,7 @@ export type SignUpMutationVariables = Exact<{
 }>;
 
 
-export type SignUpMutation = { __typename?: 'Mutation', register?: { __typename: 'User' } | null };
+export type SignUpMutation = { __typename?: 'Mutation', register?: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } | null };
 
 export type CreateChatMutationVariables = Exact<{
   type: ChatType;
@@ -643,10 +643,10 @@ export const MessageEventFieldFragmentDoc = gql`
 export const SignUpDocument = gql`
     mutation SignUp($login: String!, $password: String!, $name: String!) {
   register(login: $login, password: $password, name: $name) {
-    __typename
+    ...UserField
   }
 }
-    `;
+    ${UserFieldFragmentDoc}`;
 export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMutationVariables>;
 
 /**
