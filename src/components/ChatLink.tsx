@@ -41,37 +41,25 @@ const ChatLink = memo(
           {mutedChats.includes(id) && <Muted className="mr-1 size-4" />}
           {lastMessage && formatChatDate(lastMessage.createdAt)}
         </div>
-        {lastMessage &&
-          (type === ChatType.Group ? (
-            <div className="col-span-2 col-start-2 row-start-2 flex flex-row space-x-1">
+        {lastMessage && (
+          <div className="col-span-2 col-start-2 row-start-2 flex flex-row space-x-1">
+            {type === ChatType.Group && (
               <p className="min-w-fit overflow-hidden text-ellipsis text-nowrap font-semibold dark:text-white">
                 {lastMessage.createdBy.name}:
               </p>
-              <div className="table w-full table-fixed text-slate-600 dark:text-slate-300">
-                <p className="mr-1 table-cell w-[95%] overflow-hidden text-ellipsis whitespace-nowrap text-nowrap">
-                  {lastMessage.text}
-                </p>
-              </div>
-              {notifiedChats.includes(id) && (
-                <div
-                  className={`ml-auto mr-1 mt-0.5 size-5 min-h-5 min-w-5 rounded-full bg-blue-500 shadow-[0_0_0_2px] shadow-blue-600 dark:bg-indigo-500 dark:shadow-indigo-600 ${mutedChats.includes(id) && "bg-slate-400 shadow-slate-500 dark:bg-slate-500 dark:shadow-slate-600"}`}
-                />
-              )}
+            )}
+            <div className="table w-full table-fixed text-slate-600 dark:text-slate-300">
+              <p className="mr-1 table-cell w-[95%] overflow-hidden text-ellipsis whitespace-nowrap text-nowrap">
+                {lastMessage.text}
+              </p>
             </div>
-          ) : (
-            <>
-              <div className="col-span-2 col-start-2 row-start-2 table w-full table-fixed text-slate-600 dark:text-slate-300">
-                <p className="mr-1 table-cell w-[95%] overflow-hidden text-ellipsis whitespace-nowrap text-nowrap">
-                  {lastMessage.text}
-                </p>
-              </div>
-              {notifiedChats.includes(id) && (
-                <div
-                  className={`ml-auto mr-1 mt-0.5 size-5 min-h-5 min-w-5 rounded-full bg-blue-500 shadow-[0_0_0_2px] shadow-blue-600 dark:bg-indigo-500 dark:shadow-indigo-600 ${mutedChats.includes(id) && "bg-slate-400 shadow-slate-500 dark:bg-slate-500 dark:shadow-slate-600"}`}
-                />
-              )}
-            </>
-          ))}
+            {notifiedChats.includes(id) && (
+              <div
+                className={`ml-auto mr-1 mt-0.5 size-5 min-h-5 min-w-5 rounded-full bg-blue-500 shadow-[0_0_0_2px] shadow-blue-600 dark:bg-indigo-500 dark:shadow-indigo-600 ${mutedChats.includes(id) && "bg-slate-400 shadow-slate-500 dark:bg-slate-500 dark:shadow-slate-600"}`}
+              />
+            )}
+          </div>
+        )}
       </Link>
     );
   },
