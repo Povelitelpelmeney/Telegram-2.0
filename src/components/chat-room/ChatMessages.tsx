@@ -57,7 +57,7 @@ const ChatMessages = memo(({ id }: ChatMessagesProps) => {
         setMessagesToAppend(data.chat!.messages);
       },
     });
-  }, [getChatMessages, id, offset]);
+  }, [getChatMessages, id, offset, messagesToAppend]);
 
   const scrollToBottom = useCallback(() => {
     containerRef.current?.scrollTo({ behavior: "smooth", top: 0 });
@@ -70,18 +70,16 @@ const ChatMessages = memo(({ id }: ChatMessagesProps) => {
   useEffect(() => {
     if (
       chatMessages.some((message) =>
-        messagesToAppend.some(
-          (newMessage) =>
-            message.id === newMessage.id || id !== newMessage.chatId,
-        ),
-      )
+        messagesToAppend.some((newMessage) => message.id === newMessage.id),
+      ) ||
+      messagesToAppend.some((newMessage) => newMessage.chatId !== id)
     )
       setMessagesToAppend([]);
     else if (messagesToAppend.length > 0) {
       setChatMessages((prevMessages) => [...prevMessages, ...messagesToAppend]);
       setMessagesToAppend([]);
     }
-  }, [chatMessages, messagesToAppend]);
+  }, [chatMessages, messagesToAppend, id]);
 
   useEffect(() => {
     const eventHandler = () => {
