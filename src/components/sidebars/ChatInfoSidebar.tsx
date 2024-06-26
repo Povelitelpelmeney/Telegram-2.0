@@ -160,7 +160,7 @@ const ChatInfoSidebar = memo(({ id }: ChatInfoSidebarProps) => {
               </div>
             </div>
           )}
-          <label className="mt-auto inline-flex cursor-pointer justify-center space-x-2 p-2 dark:text-white">
+          <label className="mt-auto justify-center inline-flex cursor-pointer space-x-2 p-2">
             <p>Notifications</p>
             <input
               className="peer sr-only"

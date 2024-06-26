@@ -7,12 +7,12 @@ import { store } from "./store";
 import { Message } from "../graphql";
 
 const httpLink = new HttpLink({
-  uri: process.env.REACT_APP_HTTP_GRAPHQL_ENDPOINT,
+  uri: import.meta.env.VITE_HTTP_GRAPHQL_ENDPOINT,
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: process.env.REACT_APP_WS_GRAPHQL_ENDPOINT || "",
+    url: import.meta.env.VITE_WS_GRAPHQL_ENDPOINT,
     lazy: true,
     connectionParams: {
       authorization: store.getState().token,

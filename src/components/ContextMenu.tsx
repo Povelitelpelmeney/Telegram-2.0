@@ -81,7 +81,7 @@ const ContextMenu = memo(
 
     return (
       <div
-        className={`${className} fixed transition-opacity ${!active && "invisible opacity-0"} ${active && "visible opacity-100"}`}
+        className={`${className} fixed transition-opacity ${!active && "invisible opacity-0"} ${active && " visible opacity-100"}`}
         style={{ top: position.y, left: position.x }}
         ref={menuRef}
       >
