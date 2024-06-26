@@ -18,13 +18,12 @@ const ChatHeader = memo(({ id }: ChatHeaderProps) => {
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
   const mutedChats = useAppSelector((state) => state.chats.muted);
   const { data, loading, error } = useGetChatInfoQuery({ variables: { id } });
-  const { openSidebar, closeSidebar, sidebars } = useSidebarNavigation();
+  const { openSidebar, sidebars } = useSidebarNavigation();
 
   const handleChatInfo = () => {
     const lastSidebar = sidebars[sidebars.length - 1];
-    if (lastSidebar?.type === SidebarType.CHAT_INFO && lastSidebar?.id === id)
-      closeSidebar();
-    else openSidebar({ type: SidebarType.CHAT_INFO, id });
+    if (lastSidebar?.type !== SidebarType.CHAT_INFO || lastSidebar?.id !== id)
+      openSidebar({ type: SidebarType.CHAT_INFO, id });
   };
 
   return (
