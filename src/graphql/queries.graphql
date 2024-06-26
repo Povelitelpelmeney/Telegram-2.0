@@ -1,0 +1,96 @@
+query Me {
+  me {
+    ...UserField
+  }
+}
+
+query SignIn($login: String!, $password: String!) {
+  signIn(login: $login, password: $password)
+}
+
+query GetAvailableChats($offset: Int = 0, $first: Int = 10) {
+  chats(offset: $offset, first: $first) {
+    id
+    type
+    image
+    messages(first: 1) {
+      ...MessageField
+    }
+    meta {
+      ...MetaField
+    }
+    name
+  }
+}
+
+query GetChatInfo($id: ID!) {
+  chat(id: $id) {
+    id
+    type
+    image
+    name
+    meta {
+      ...MetaField
+    }
+    owner {
+      ...UserField
+    }
+  }
+}
+
+query GetChatMessages($id: ID!, $offset: Int = 0, $first: Int = 10) {
+  chat(id: $id) {
+    id
+    messages(offset: $offset, first: $first) {
+      ...MessageField
+    }
+  }
+}
+
+query GetChatMembers($id: ID!, $offset: Int = 0, $first: Int = 10) {
+  chat(id: $id) {
+    id
+    members(offset: $offset, first: $first) {
+      ...UserField
+    }
+  }
+}
+
+query GetUsers($offset: Int = 0, $first: Int = 10) {
+  users(offset: $offset, first: $first) {
+    ...UserField
+  }
+}
+
+query GetUserInfo($login: String!) {
+  user(login: $login) {
+    ...UserField
+  }
+}
+
+fragment MessageField on Message {
+  id
+  chatId
+  createdAt
+  createdBy {
+    ...UserField
+  }
+  meta {
+    ...MetaField
+  }
+  text
+}
+
+fragment UserField on User {
+  image
+  login
+  meta {
+    ...MetaField
+  }
+  name
+}
+
+fragment MetaField on Meta {
+  key
+  val
+}
