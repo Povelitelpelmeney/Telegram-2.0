@@ -5,6 +5,7 @@ import { useSignInLazyQuery } from "../../graphql";
 import { useAppDispatch } from "../../hooks";
 import { setToken } from "../../features/token/tokenSlice";
 import { LoadingSpin } from "../icons";
+import { setActiveChat } from "../../features/chat/chatSlice";
 
 type SignInFormDataType = {
   login: string;
@@ -25,6 +26,7 @@ const SignInForm = memo(() => {
     fetchPolicy: "network-only",
     onCompleted: (data) => {
       dispatch(setToken(data.signIn!));
+      dispatch(setActiveChat(""));
       client.resetStore();
     },
   });
@@ -43,7 +45,10 @@ const SignInForm = memo(() => {
   };
 
   return (
-    <form className="overflow-hidden text-ellipsis text-nowrap" onSubmit={handleSubmit}>
+    <form
+      className="overflow-hidden text-ellipsis text-nowrap"
+      onSubmit={handleSubmit}
+    >
       <div className="mb-4">
         <label
           className="mb-2 block select-none text-sm font-bold text-slate-700 dark:text-slate-300"

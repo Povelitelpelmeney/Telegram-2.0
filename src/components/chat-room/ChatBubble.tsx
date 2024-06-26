@@ -29,7 +29,7 @@ const ChatBubble = memo(({ message }: ChatBubbleProps) => {
         (me.me?.login === message.createdBy.login ? (
           <div className="m-3 ml-auto flex flex-row items-end gap-3">
             <div className="flex h-fit max-w-lg flex-row flex-wrap rounded-l-xl rounded-tr-xl bg-green-100 p-2.5 dark:bg-purple-300">
-              <div className="whitespace-break-spaces text-wrap break-all align-baseline text-base ">
+              <div className="max-w-lg whitespace-break-spaces text-wrap break-words align-baseline text-base ">
                 {message.text}
               </div>
               <div className="ml-auto mt-auto pl-2 align-baseline text-xs text-slate-600">
@@ -59,14 +59,14 @@ const ChatBubble = memo(({ message }: ChatBubbleProps) => {
                 />
               </span>
             )}
-            <div className="flex h-fit max-w-lg break-words flex-col rounded-r-xl rounded-tl-xl bg-green-100 p-2.5 dark:bg-purple-300">
+            <div className="flex h-fit max-w-lg flex-col break-words rounded-r-xl rounded-tl-xl bg-green-100 p-2.5 dark:bg-purple-300">
               {chat.chat.type !== ChatType.Private && (
                 <div className="mb-1 w-full text-base font-semibold">
                   {message.createdBy.name}
                 </div>
               )}
               <div className="flex h-fit w-full flex-wrap">
-                <p className="whitespace-break-spaces max-w-[31rem] text-wrap break-words align-baseline text-base ">
+                <p className="max-w-lg whitespace-break-spaces text-wrap break-words align-baseline text-base ">
                   {message.text}
                 </p>
                 <div className="ml-auto mt-auto pl-2 align-baseline text-xs text-slate-600">
