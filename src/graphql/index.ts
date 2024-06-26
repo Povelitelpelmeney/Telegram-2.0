@@ -460,6 +460,14 @@ export type UpdateUserMutationVariables = Exact<{
 
 export type UpdateUserMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } | null };
 
+export type UpsertUserMetaMutationVariables = Exact<{
+  key: Scalars['String']['input'];
+  val: Scalars['String']['input'];
+}>;
+
+
+export type UpsertUserMetaMutation = { __typename?: 'Mutation', upsertUserMeta?: { __typename?: 'User', image?: any | null, login: string, name: string, meta: Array<{ __typename?: 'Meta', key: string, val: string }> } | null };
+
 export type InviteUserMutationVariables = Exact<{
   chatId: Scalars['ID']['input'];
   login: Scalars['String']['input'];
@@ -790,6 +798,40 @@ export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
 export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
 export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
+export const UpsertUserMetaDocument = gql`
+    mutation UpsertUserMeta($key: String!, $val: String!) {
+  upsertUserMeta(key: $key, val: $val) {
+    ...UserField
+  }
+}
+    ${UserFieldFragmentDoc}`;
+export type UpsertUserMetaMutationFn = Apollo.MutationFunction<UpsertUserMetaMutation, UpsertUserMetaMutationVariables>;
+
+/**
+ * __useUpsertUserMetaMutation__
+ *
+ * To run a mutation, you first call `useUpsertUserMetaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpsertUserMetaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [upsertUserMetaMutation, { data, loading, error }] = useUpsertUserMetaMutation({
+ *   variables: {
+ *      key: // value for 'key'
+ *      val: // value for 'val'
+ *   },
+ * });
+ */
+export function useUpsertUserMetaMutation(baseOptions?: Apollo.MutationHookOptions<UpsertUserMetaMutation, UpsertUserMetaMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpsertUserMetaMutation, UpsertUserMetaMutationVariables>(UpsertUserMetaDocument, options);
+      }
+export type UpsertUserMetaMutationHookResult = ReturnType<typeof useUpsertUserMetaMutation>;
+export type UpsertUserMetaMutationResult = Apollo.MutationResult<UpsertUserMetaMutation>;
+export type UpsertUserMetaMutationOptions = Apollo.BaseMutationOptions<UpsertUserMetaMutation, UpsertUserMetaMutationVariables>;
 export const InviteUserDocument = gql`
     mutation InviteUser($chatId: ID!, $login: String!) {
   inviteUser(login: $login, chatId: $chatId)

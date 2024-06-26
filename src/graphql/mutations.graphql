@@ -32,6 +32,12 @@ mutation UpdateUser($image: Base64, $name: String) {
   }
 }
 
+mutation UpsertUserMeta($key: String!, $val: String!) {
+  upsertUserMeta(key: $key, val: $val) {
+    ...UserField
+  }
+}
+
 mutation InviteUser($chatId: ID!, $login: String!) {
   inviteUser(login: $login, chatId: $chatId)
 }

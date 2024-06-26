@@ -1,7 +1,11 @@
 import { memo, useEffect } from "react";
 import { useMatch, useNavigate, useParams } from "react-router-dom";
 import useSound from "use-sound";
-import { notifyChat, setActiveChat } from "../features/chat/chatSlice";
+import {
+  notifyChat,
+  setActiveChat,
+  setMutedChats,
+} from "../features/chat/chatSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { useMeQuery, useNewMessagesSubscription } from "../graphql";
 import SidebarProvider, { SidebarType } from "../contexts/SidebarContext";
@@ -40,6 +44,14 @@ const Home = memo(() => {
   useEffect(() => {
     if (id) dispatch(setActiveChat(id));
   }, [id, dispatch]);
+
+  useEffect(() => {
+    if (!meData?.me) return;
+    const mutedChats: string[] = JSON.parse(
+      meData.me.meta.find((item) => item.key === "muted")?.val || "[]",
+    );
+    dispatch(setMutedChats(mutedChats));
+  }, [meData, dispatch]);
 
   useEffect(() => {
     const subtraction = notifiedChats.filter(

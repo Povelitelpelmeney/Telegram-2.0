@@ -38,7 +38,7 @@ const ChatLink = memo(
         <p className="overflow-hidden text-ellipsis text-nowrap text-lg font-semibold dark:text-white">
           {name}
         </p>
-        <div className="-mt-2 inline-flex items-center justify-center justify-self-end text-nowrap text-slate-600 dark:text-slate-300">
+        <div className="-mt-2 inline-flex h-11 items-center justify-center justify-self-end text-nowrap text-slate-600 dark:text-slate-300">
           {mutedChats.includes(id) && <Muted className="mr-1 size-4" />}
           {lastMessage && formatChatDate(lastMessage.createdAt)}
         </div>

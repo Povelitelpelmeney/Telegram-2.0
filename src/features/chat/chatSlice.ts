@@ -6,11 +6,9 @@ type ChatsState = {
   notified: string[];
 };
 
-const mutedChats = localStorage.getItem("muted");
-
 const initialState: ChatsState = {
   active: "",
-  muted: mutedChats ? JSON.parse(mutedChats) : [],
+  muted: [],
   notified: [],
 };
 
@@ -21,10 +19,8 @@ const chatsSlice = createSlice({
     setActiveChat(state, action: PayloadAction<string>) {
       state.active = action.payload;
     },
-    muteChat(state, action: PayloadAction<string>) {
-      state.muted.includes(action.payload)
-        ? (state.muted = state.muted.filter((chat) => chat !== action.payload))
-        : (state.muted = [...state.muted, action.payload]);
+    setMutedChats(state, action: PayloadAction<string[]>) {
+      state.muted = action.payload;
     },
     notifyChat(state, action: PayloadAction<string>) {
       if (!state.notified.includes(action.payload))
@@ -41,7 +37,7 @@ const chatsSlice = createSlice({
 
 export const {
   setActiveChat,
-  muteChat,
+  setMutedChats,
   notifyChat,
   readNotification,
   readAllNotifications,

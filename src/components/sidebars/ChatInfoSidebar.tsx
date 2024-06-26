@@ -13,17 +13,13 @@ import {
   useGetChatMembersLazyQuery,
   useKickUserMutation,
   useMeQuery,
+  useUpsertUserMetaMutation,
 } from "../../graphql";
-import {
-  useAppDispatch,
-  useAppSelector,
-  useSidebarNavigation,
-} from "../../hooks";
+import { useAppSelector, useSidebarNavigation } from "../../hooks";
 import { Arrow, Pen, Cross } from "../icons";
 import { formatImage } from "../../utils";
-import InfiniteScroll from "../InfiniteScroll";
 import { SidebarType } from "../../contexts/SidebarContext";
-import { muteChat } from "../../features/chat/chatSlice";
+import InfiniteScroll from "../InfiniteScroll";
 
 type ChatInfoSidebarProps = {
   id: string;
@@ -33,8 +29,8 @@ const ChatInfoSidebar = memo(({ id }: ChatInfoSidebarProps) => {
   const [closing, setClosing] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const mutedChats = useAppSelector((state) => state.chats.muted);
-  const dispatch = useAppDispatch();
   const { data: meData } = useMeQuery();
+  const [upsertUserMeta] = useUpsertUserMetaMutation();
   const [kickUser] = useKickUserMutation();
   const [getMembers] = useGetChatMembersLazyQuery();
   const { data, loading, error } = useGetChatInfoQuery({
@@ -54,6 +50,20 @@ const ChatInfoSidebar = memo(({ id }: ChatInfoSidebarProps) => {
         );
         setOffset((prevOffset) => --prevOffset);
       },
+    });
+  };
+
+  const handleMuteChat = () => {
+    const mutedChats: string[] = JSON.parse(
+      meData?.me?.meta.find((item) => item.key === "muted")?.val || "[]",
+    );
+
+    const modifiedMutedChats = mutedChats.includes(id)
+      ? mutedChats.filter((chatId) => chatId !== id)
+      : [...mutedChats, id];
+    upsertUserMeta({
+      variables: { key: "muted", val: JSON.stringify(modifiedMutedChats) },
+      fetchPolicy: "network-only",
     });
   };
 
@@ -135,7 +145,7 @@ const ChatInfoSidebar = memo(({ id }: ChatInfoSidebarProps) => {
               <div className="flex size-60 flex-col overflow-y-auto rounded border-2">
                 {members.map((member) => (
                   <div
-                    className="relative cursor-pointer flex h-12 w-full flex-row space-x-2 p-1 hover:bg-slate-200 dark:hover:bg-slate-800"
+                    className="relative flex h-12 w-full cursor-pointer flex-row space-x-2 p-1 hover:bg-slate-200 dark:hover:bg-slate-800"
                     key={member.login}
                     onClick={() =>
                       openSidebar({
@@ -180,7 +190,7 @@ const ChatInfoSidebar = memo(({ id }: ChatInfoSidebarProps) => {
               className="peer sr-only"
               type="checkbox"
               defaultChecked={!mutedChats.includes(id)}
-              onChange={() => dispatch(muteChat(id))}
+              onChange={handleMuteChat}
               value=""
             />
             <div className="peer relative h-6 w-11 rounded-full bg-slate-400 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-slate-500" />
