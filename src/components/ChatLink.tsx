@@ -47,21 +47,25 @@ const ChatLink = memo(
               <p className="min-w-fit overflow-hidden text-ellipsis text-nowrap font-semibold dark:text-white">
                 {lastMessage.createdBy.name}:
               </p>
-              <div className="inline-flex w-full overflow-hidden text-ellipsis text-nowrap text-slate-600 dark:text-slate-300">
-                {lastMessage.text}
+              <div className="inline-flex w-full overflow-hidden text-ellipsis text-nowrap">
+                <p className="mr-1 overflow-hidden text-ellipsis text-nowrap text-slate-600 dark:text-slate-300">
+                  {lastMessage.text}
+                </p>
                 {notifiedChats.includes(id) && (
                   <div
-                    className={`ml-auto mr-1 mt-1 size-5 rounded-full bg-blue-500 shadow-[0_0_0_2px] shadow-blue-600 dark:bg-indigo-500 dark:shadow-indigo-600 ${mutedChats.includes(id) && "bg-slate-400 shadow-slate-500 dark:bg-slate-500 dark:shadow-slate-600"}`}
+                    className={`ml-auto mr-1 mt-1 size-5 min-h-5 min-w-5 rounded-full bg-blue-500 shadow-[0_0_0_2px] shadow-blue-600 dark:bg-indigo-500 dark:shadow-indigo-600 ${mutedChats.includes(id) && "bg-slate-400 shadow-slate-500 dark:bg-slate-500 dark:shadow-slate-600"}`}
                   />
                 )}
               </div>
             </div>
           ) : (
-            <div className="col-span-2 col-start-2 row-start-2 inline-flex overflow-hidden text-ellipsis text-nowrap text-slate-600 dark:text-slate-300">
-              {lastMessage.text}
+            <div className="col-span-2 col-start-2 row-start-2 inline-flex overflow-hidden text-ellipsis text-nowrap">
+              <p className="mr-1 overflow-hidden text-ellipsis text-nowrap text-slate-600 dark:text-slate-300">
+                {lastMessage.text}
+              </p>
               {notifiedChats.includes(id) && (
                 <div
-                  className={`ml-auto mr-1 mt-1 size-5 rounded-full bg-blue-500 shadow-[0_0_0_2px] shadow-blue-600 dark:bg-indigo-500 dark:shadow-indigo-600 ${mutedChats.includes(id) && "bg-slate-400 shadow-slate-500 dark:bg-slate-500 dark:shadow-slate-600"}`}
+                  className={`ml-auto mr-1 mt-1 size-5 min-h-5 min-w-5 rounded-full bg-blue-500 shadow-[0_0_0_2px] shadow-blue-600 dark:bg-indigo-500 dark:shadow-indigo-600 ${mutedChats.includes(id) && "bg-slate-400 shadow-slate-500 dark:bg-slate-500 dark:shadow-slate-600"}`}
                 />
               )}
             </div>
