@@ -28,11 +28,11 @@ const ChatBubble = memo(({ message }: ChatBubbleProps) => {
         chat.chat &&
         (me.me?.login === message.createdBy.login ? (
           <div className="m-3 -mr-2 flex w-full flex-row items-end justify-end gap-3 pl-1 pr-2.5">
-            <div className="flex h-fit min-w-0 max-w-lg flex-row flex-wrap rounded-l-xl rounded-tr-xl bg-green-100 p-2.5 dark:bg-purple-300">
-              <div className="max-w-full flex-auto overflow-hidden whitespace-pre-wrap text-wrap break-words align-baseline text-base">
+            <div className="flex h-fit min-w-0 max-w-lg flex-row flex-wrap rounded-l-xl rounded-tr-xl bg-blue-200 p-2.5 dark:bg-indigo-800">
+              <div className="max-w-full flex-auto overflow-hidden whitespace-pre-wrap text-wrap break-words align-baseline text-base dark:text-white">
                 {message.text}
               </div>
-              <div className="ml-auto mt-auto h-4 flex-[0_0_auto] whitespace-nowrap pl-2 align-baseline text-xs text-slate-600">
+              <div className="ml-auto mt-auto h-4 flex-[0_0_auto] whitespace-nowrap pl-2 align-baseline text-xs font-extralight text-slate-600 dark:text-slate-200">
                 {formatMessageDate(message.createdAt)}
               </div>
             </div>
@@ -59,17 +59,17 @@ const ChatBubble = memo(({ message }: ChatBubbleProps) => {
                 />
               </span>
             )}
-            <div className="mr-4 flex min-w-0 max-w-lg flex-col rounded-r-xl rounded-tl-xl bg-green-100 p-2.5 dark:bg-purple-300">
+            <div className="mr-4 flex min-w-0 max-w-lg flex-col rounded-r-xl rounded-tl-xl bg-blue-100 p-2.5 dark:bg-indigo-600">
               {chat.chat.type !== ChatType.Private && (
-                <div className="mb-1 align-baseline text-base font-semibold">
+                <div className="mb-1 align-baseline text-base font-medium dark:text-white">
                   {message.createdBy.name}
                 </div>
               )}
               <div className="flex flex-wrap">
-                <div className="flex-auto overflow-hidden whitespace-pre-wrap text-wrap break-words align-baseline text-base">
+                <div className="flex-auto overflow-hidden whitespace-pre-wrap text-wrap break-words align-baseline text-base dark:text-white">
                   {message.text}
                 </div>
-                <div className="ml-auto mt-auto h-4 flex-[0_0_auto] whitespace-nowrap pl-2 align-baseline text-xs text-slate-600">
+                <div className="ml-auto mt-auto h-4 flex-[0_0_auto] whitespace-nowrap pl-2 align-baseline text-xs font-extralight text-slate-600 dark:text-slate-200">
                   {formatMessageDate(message.createdAt)}
                 </div>
               </div>
