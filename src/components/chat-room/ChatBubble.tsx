@@ -32,7 +32,7 @@ const ChatBubble = memo(({ message }: ChatBubbleProps) => {
               <div className="max-w-full flex-auto overflow-hidden whitespace-pre-wrap text-wrap break-words align-baseline text-base dark:text-white">
                 {message.text}
               </div>
-              <div className="ml-auto mt-auto h-4 flex-[0_0_auto] whitespace-nowrap pl-2 align-baseline text-xs font-extralight text-slate-600 dark:text-slate-200">
+              <div className="ml-auto mt-auto h-4 flex-[0_0_auto] whitespace-nowrap pl-2 align-baseline text-xs text-slate-700 dark:text-slate-200">
                 {formatMessageDate(message.createdAt)}
               </div>
             </div>
@@ -69,7 +69,7 @@ const ChatBubble = memo(({ message }: ChatBubbleProps) => {
                 <div className="flex-auto overflow-hidden whitespace-pre-wrap text-wrap break-words align-baseline text-base dark:text-white">
                   {message.text}
                 </div>
-                <div className="ml-auto mt-auto h-4 flex-[0_0_auto] whitespace-nowrap pl-2 align-baseline text-xs font-extralight text-slate-600 dark:text-slate-200">
+                <div className="ml-auto mt-auto h-4 flex-[0_0_auto] whitespace-nowrap pl-2 align-baseline text-xs text-slate-600 dark:text-slate-200">
                   {formatMessageDate(message.createdAt)}
                 </div>
               </div>
