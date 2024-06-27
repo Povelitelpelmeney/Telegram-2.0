@@ -46,7 +46,7 @@ const cache = new InMemoryCache({
       fields: {
         chats: {
           keyArgs: false,
-          merge: (_: Reference[] = [], incoming: Reference[]) => incoming,
+          merge: (_: Reference[], incoming: Reference[]) => incoming,
         },
       },
     },
