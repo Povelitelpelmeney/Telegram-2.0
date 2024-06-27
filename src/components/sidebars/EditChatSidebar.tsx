@@ -9,6 +9,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import {
   ChatType,
+  GetAvailableChatsDocument,
+  GetAvailableChatsQuery,
   Scalars,
   User,
   useDeleteChatMutation,
@@ -89,9 +91,18 @@ const EditChatSidebar = memo(({ id }: EditChatSidebarProps) => {
   const handleDeleteChat = () => {
     deleteChat({
       variables: { id },
-      onCompleted: () => {
-        navigate("/");
-        window.location.reload();
+      onCompleted: () => navigate("/"),
+      update: (cache) => {
+        cache.updateQuery(
+          { query: GetAvailableChatsDocument },
+          (data: GetAvailableChatsQuery | null) => {
+            if (!data) return;
+            return {
+              ...data,
+              chats: data.chats.filter((chat) => chat.id !== id),
+            };
+          },
+        );
       },
     });
   };

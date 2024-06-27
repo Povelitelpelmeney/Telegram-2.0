@@ -4,7 +4,6 @@ import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { setContext } from "@apollo/client/link/context";
 import { createClient } from "graphql-ws";
 import { store } from "./store";
-import { Message } from "../graphql";
 
 const httpLink = new HttpLink({
   uri: import.meta.env.VITE_HTTP_GRAPHQL_ENDPOINT,
@@ -43,22 +42,19 @@ const link = split(
 
 const cache = new InMemoryCache({
   typePolicies: {
+    Query: {
+      fields: {
+        chats: {
+          keyArgs: false,
+          merge: (_: Reference[] = [], incoming: Reference[]) => incoming,
+        },
+      },
+    },
     Chat: {
       fields: {
-        messages: {
+        members: {
           keyArgs: false,
-          merge: (
-            existing: Reference[] = [],
-            incoming: Reference[],
-            { readField },
-          ) => {
-            const readId = (ref: Reference) =>
-              readField<Message["id"]>("id", ref);
-            const existingIds = new Set(existing.map((mes) => readId(mes)));
-            return existing.concat(
-              incoming.filter((message) => !existingIds.has(readId(message))),
-            );
-          },
+          merge: false,
         },
       },
     },

@@ -33,13 +33,13 @@ const ChatListSidebar = memo(() => {
           id: newMessageChatId,
         }),
         fields: {
-          messages: (existing = []) => {
+          messages: () => {
             const newMessageRef = client.cache.writeFragment({
               data: newMessage,
               fragment: MessageFieldFragmentDoc,
               fragmentName: "MessageField",
             });
-            return [newMessageRef].concat(existing);
+            return [newMessageRef];
           },
         },
       });

@@ -42,7 +42,7 @@ const Home = memo(() => {
   }, [token, navigate]);
 
   useEffect(() => {
-    if (id) dispatch(setActiveChat(id));
+    dispatch(setActiveChat(id || ""));
   }, [id, dispatch]);
 
   useEffect(() => {

@@ -70,7 +70,7 @@ const ChatInfoSidebar = memo(({ id }: ChatInfoSidebarProps) => {
   const loadMembers = useCallback(async () => {
     await getMembers({
       variables: { id, offset, first: 20 },
-      fetchPolicy: "cache-and-network",
+      fetchPolicy: "no-cache",
       onCompleted: (data) => {
         if (!data.chat?.members) return;
         if (data.chat.members.length === 0) return;
