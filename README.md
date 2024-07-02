@@ -1,3 +1,5 @@
+# Telegram 2.0 messenger
+Allows you to chat in groups and chats
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
